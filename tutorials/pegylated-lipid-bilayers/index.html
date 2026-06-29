@@ -1,0 +1,1459 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A Python suite for facilitating simulations of (bio-)macromolecules and nanomaterials — generation of GROMACS input files and starting coordinates.">
+      
+      
+        <meta name="author" content="The Polyply development team">
+      
+      
+        <link rel="canonical" href="https://polyply.github.io/polyply_1.0/tutorials/pegylated-lipid-bilayers/">
+      
+      
+        <link rel="prev" href="../gromos-polymer-melts/">
+      
+      
+        <link rel="next" href="../single-stranded-dna/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/polyply_logo.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>PEGylated Lipid Bilayers - Polyply</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#tutorial-pegylated-lipid-bilayers" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Polyply" class="md-header__button md-logo" aria-label="Polyply" data-md-component="logo">
+      
+  <img src="../../assets/polyply_logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Polyply
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              PEGylated Lipid Bilayers
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/marrink-lab/polyply_1.0" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    marrink-lab/polyply_1.0
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Polyply" class="md-nav__button md-logo" aria-label="Polyply" data-md-component="logo">
+      
+  <img src="../../assets/polyply_logo.png" alt="logo">
+
+    </a>
+    Polyply
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/marrink-lab/polyply_1.0" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    marrink-lab/polyply_1.0
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quick-start/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quick Start
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/polymer-library/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Polymer Library
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutorials
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tutorials
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../martini-polymers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Martini Polymers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gromos-polymer-melts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GROMOS Polymer Melts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PEGylated Lipid Bilayers
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PEGylated Lipid Bilayers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1 - Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-generating-an-itp-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2 - Generating an itp file
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-generating-starting-coordinates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3 - Generating starting coordinates
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3 - Generating starting coordinates">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-coordinates-for-the-mushroom-state" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 - Coordinates for the mushroom state
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-coordinates-for-the-brush-regime" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 - Coordinates for the brush regime
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-adding-water-and-ions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 - Adding water and ions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-useful-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4 - Useful Notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5 - References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../single-stranded-dna/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Single-Stranded DNA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../martini3-idps-proteins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Martini 3 IDPs / Proteins
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pegylated-proteins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PEGylated Proteins
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Syntax Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Syntax Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/build-file-syntax/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build File
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/gen-seq-syntax/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    gen_seq
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/writing-ff-input-files/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Writing .ff Input Files
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Contributing
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/submit-polymer-parameters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Submit Polymer Parameters
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../faqs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FAQs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1 - Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-generating-an-itp-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2 - Generating an itp file
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-generating-starting-coordinates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3 - Generating starting coordinates
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3 - Generating starting coordinates">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-coordinates-for-the-mushroom-state" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 - Coordinates for the mushroom state
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-coordinates-for-the-brush-regime" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 - Coordinates for the brush regime
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-adding-water-and-ions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 - Adding water and ions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-useful-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4 - Useful Notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5 - References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="tutorial-pegylated-lipid-bilayers">Tutorial: PEGylated Lipid Bilayers<a class="headerlink" href="#tutorial-pegylated-lipid-bilayers" title="Permanent link">&para;</a></h1>
+<h2 id="1-introduction">1 - Introduction<a class="headerlink" href="#1-introduction" title="Permanent link">&para;</a></h2>
+<p>With polyply it becomes easy to combine your polymer with any existing bio-molecules. One
+such use case is the creation of PEGylated lipid bilayers. PEGylated lipids are lipids to
+which PEG is covalently attached. Depending on the grafting density (i.e. concentration of
+those lipids in the bilayer) the chain dimensions fall into one of two regimes. In the low
+concentration regime, known as the "mushroom regime", the chains are well-separated, interact
+minimally, and therefore move freely within a space approximating a half-sphere [1]. In
+contrast, in the high grafting density regime ("brush regime"), the polymer chains are close
+in space and repel each other. This repulsion leads to more extended chain dimensions than in
+the mushroom regime. More information about PEGylated lipid bilayers can be found here [2,3].
+In this tutorial, we learn how to create PEGylated bilayers in the two regimes using the
+Martini force field. Please make sure to consult the <a href="#4-useful-notes">Useful Notes</a> section
+before starting your own project. When using the Martini 3 force field it is essential to
+adjust the PEG–phosphate interaction parameters as described.</p>
+<h2 id="2-generating-an-itp-file">2 - Generating an itp file<a class="headerlink" href="#2-generating-an-itp-file" title="Permanent link">&para;</a></h2>
+<p>First, we need to generate an itp file for the PEGylated lipid we want to study. To do so we
+have to
+<a href="https://github.com/marrink-lab/martini-forcefields/tree/main/martini_forcefields/regular/v3.0.0/gmx_files">download</a>
+the Martini 3 [4] force-field files, which also contain the lipid definitions
+(<code>martini300/martini_v3.0.0_phospholipids_v1.itp</code>). Note that connecting PEG to lipids is
+currently only supported for 3 lipids (DPPE, POPE, DOPE). Once we have the parameter files we
+simply invoke the itp file generation tool (<code>polyply gen_params</code>) as follows:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>polyply<span class="w"> </span>gen_params<span class="w"> </span>-f<span class="w"> </span>martini_v3.0.0_phospholipids_v1.itp<span class="w"> </span>-lib<span class="w"> </span>martini3<span class="w"> </span>-o<span class="w"> </span>pegylated_lipid.itp<span class="w"> </span>-name<span class="w"> </span>PEL<span class="w"> </span>-seq<span class="w"> </span>&lt;lipid-name&gt;:1<span class="w"> </span>PEO:&lt;number<span class="w"> </span>of<span class="w"> </span>monomers&gt;
+</code></pre></div>
+<p>For this command, we have to provide the lipid itp file using the <code>-f</code> flag. Next, we have to
+tell polyply we want to use the library of Martini 3 using <code>-lib martini3</code>. Besides the name
+of the output file provided with the <code>-o</code> flag and the name of the molecule set by <code>-name</code>,
+we also need to define the macromolecule residue graph, which in this case is a linear
+sequence. We want one lipid molecule (i.e. <code>&lt;lipid-name&gt;:1</code>) to be connected to several
+monomers of PEO (i.e. <code>PEO:&lt;number of monomers&gt;</code>). The lipid name is the molecule name
+specified in the lipid itp file.</p>
+<p>Let us generate a specific example, namely PEGylated POPE with 50 residues of PEG terminated
+with an OH group. We will use this lipid as an example in the rest of the tutorial. To
+generate the itp file, run the following command:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>polyply<span class="w"> </span>gen_params<span class="w"> </span>-f<span class="w"> </span>martini_v3.0.0_phospholipids_v1.itp<span class="w"> </span>-lib<span class="w"> </span>martini3<span class="w"> </span>-o<span class="w"> </span>PEL.itp<span class="w"> </span>-name<span class="w"> </span>PEL<span class="w"> </span>-seq<span class="w"> </span>POPE:1<span class="w"> </span>PEO:50<span class="w"> </span>OHter:1
+</code></pre></div>
+<h2 id="3-generating-starting-coordinates">3 - Generating starting coordinates<a class="headerlink" href="#3-generating-starting-coordinates" title="Permanent link">&para;</a></h2>
+<p>Now that we have the itp file, we will learn how to generate the starting coordinates. This
+is done in two steps: (1) first use
+<a href="http://cgmartini.nl/index.php/tools2/proteins-and-bilayers">insane</a> or
+<a href="https://github.com/marrink-lab/TS2CG">TS2CG</a> to generate a lipid bilayer of your choice.
+Don't add water or ions yet! (2) Subsequently use the polyply coordinate generation tool to
+add the polymer. For the sake of this tutorial we generate a lipid bilayer of 100 POPC lipids
+in each leaflet. If you are using insane this can be done by running the following command:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>python2<span class="w"> </span>insane.py<span class="w"> </span>-l<span class="w"> </span>POPC:95<span class="w"> </span>-l<span class="w"> </span>POPE:5<span class="w"> </span>-o<span class="w"> </span>bilayer.gro<span class="w"> </span>-dz<span class="w"> </span><span class="m">15</span>.0<span class="w"> </span>-x<span class="w"> </span><span class="m">8</span>.0<span class="w"> </span>-y<span class="w"> </span><span class="m">8</span>.0
+</code></pre></div>
+<p>Now that we have the bilayer, let's begin by generating coordinates for the mushroom state.</p>
+<h3 id="31-coordinates-for-the-mushroom-state">3.1 - Coordinates for the mushroom state<a class="headerlink" href="#31-coordinates-for-the-mushroom-state" title="Permanent link">&para;</a></h3>
+<p>The first thing we need is a topology file. Let's call it <code>system.top</code>. This file needs to
+describe the complete system that we want to generate. The topology file should then look
+like this:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>#include &quot;martini_v3.0.0.itp&quot;
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>#include &quot;martini_v3.0.0_ions_v1.itp&quot;
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>#include &quot;martini_v3.0.0_solvents_v1.itp&quot;
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>#include &quot;martini_v3.0.0_phospholipids_v1.itp&quot;
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>#include &quot;PEL.itp&quot;
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>[ system ]
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>; name
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>PEGylated lipid mushroom
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>[ molecules ]
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>; name  number
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>PEL          5
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>POPC         95
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>PEL          5
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>POPC         95
+</code></pre></div>
+<p>The mushroom state is characterized by an unrestricted chain tethered to the lipid bilayer.
+So there is no specific directional restriction to the growing of the polymer chain. Thus we
+can use the following command to "grow" the polymer on top of the lipid bilayer:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>polyply<span class="w"> </span>gen_coords<span class="w"> </span>-p<span class="w"> </span>system.top<span class="w"> </span>-o<span class="w"> </span>struct.gro<span class="w"> </span>-res<span class="w"> </span>PEO<span class="w"> </span>OHter<span class="w"> </span>-c<span class="w"> </span>bilayer.gro<span class="w"> </span>-name<span class="w"> </span><span class="nb">test</span><span class="w"> </span>-box<span class="w"> </span><span class="m">8</span>.0<span class="w"> </span><span class="m">8</span>.0<span class="w"> </span><span class="m">20</span>.0<span class="w"> </span>-split<span class="w"> </span>POPE:HEAD-NH3:TAIL-PO4,GL1,GL2,C1A,D2A,C3A,C4A,C1B,C2B,C3B,C4B
+</code></pre></div>
+<p>To generate the structure we always need to specify the initial coordinates of the lipid
+bilayer (i.e. <code>-c bilayer.gro</code>), the residues that need to be built (<code>-res PEO OHter</code>), and
+the box (<code>-box 8.0 8.0 20</code>). In addition, we choose to split the residue POPE into two
+separate residues describing the lipid head group and the lipid tail region. Run
+<code>polyply gen_coords -h</code> to get more information on the splitting syntax. Splitting the
+residues is needed because polyply generates a super-coarse-grained 1-bead-per-residue model.
+However, PEO is attached to the head group and we want to start "growing" the chain from
+there. More information can be found in the
+<a href="https://arxiv.org/abs/2105.05890">publication</a>. When you change the lipid type you might
+have to adapt the names. However, the head group always contains an NH3 and PO4 bead.
+Finally, you can add water to the system with your favorite tool for solvation, or skip ahead
+to use polyply.</p>
+<h3 id="32-coordinates-for-the-brush-regime">3.2 - Coordinates for the brush regime<a class="headerlink" href="#32-coordinates-for-the-brush-regime" title="Permanent link">&para;</a></h3>
+<p>In the brush regime the grafting density is higher, the chains tend to be more elongated and
+more tightly packed. When we generate the initial structure we need to take those factors
+into account. This can be done very easily by creating a build file, which can be used to
+specify more complex building options. First, we need to increase the grafting density. We
+generate a new lipid bilayer:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>python2<span class="w"> </span>insane.py<span class="w"> </span>-l<span class="w"> </span>POPC:75<span class="w"> </span>-l<span class="w"> </span>POPE:25<span class="w"> </span>-o<span class="w"> </span>bilayer_brush.gro<span class="w"> </span>-dz<span class="w"> </span><span class="m">33</span>.0<span class="w"> </span>-x<span class="w"> </span><span class="m">8</span>.0<span class="w"> </span>-y<span class="w"> </span><span class="m">8</span>.0
+</code></pre></div>
+<p>Then we change the number of PEL molecules in the topology file to 25 for each leaflet. Your
+topology file should look like this now:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>#include &quot;martini_v3.0.0.itp&quot;
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>#include &quot;martini_v3.0.0_ions_v1.itp&quot;
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>#include &quot;martini_v3.0.0_solvents_v1.itp&quot;
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>#include &quot;martini_v3.0.0_phospholipids_v1.itp&quot;
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>#include &quot;PEL.itp&quot;
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>[ system ]
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>; name
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>PEGylated lipid brush
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>[ molecules ]
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>; name  number
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>PEL          25
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>POPC         75
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>PEL          25
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>POPC         75
+</code></pre></div>
+<p>Next create a build file, which looks as follows:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>[ molecule ]
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>; molname
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>PEL  0  25
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>[ rw_restriction ]
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>; resname start stop  normal   angle
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a> PEO    3   52    0 0 1     90.0
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>[ molecule ]
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>; molname
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>PEL  100 125
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>[ rw_restriction ]
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>; resname start stop  normal   angle
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a> PEO    2   51    0 0 -1     90.0
+</code></pre></div>
+<p>In this build file, we can specify building options for specific molecules in the system.
+Which molecules we want to target is specified by the <code>[ molecule ]</code> directive that is
+followed by a line of the following format:
+<code>&lt;molecule_name&gt; &lt;starting molecule index&gt; &lt;ending molecule index&gt;</code>. Note molecule indices
+are counted as total, not per species. For this example, we want to specify options for the
+first 25 lipids and the lipids 100 to 125. In this specific case, the first 25 are in the
+upper leaflet and the others are in the lower leaflet. Next, we write the <code>[rw_restriction]</code>
+directive. This directive can be used to specify how we want to restrict the random walk used
+to grow the polymer chains. It has the following syntax:
+<code>&lt;resname&gt; &lt;starting resid&gt; &lt;last resid&gt; &lt;x&gt; &lt;y&gt; &lt;z&gt; &lt;angle in degree&gt;</code>. Each line specifies
+which residue of the molecule we want to target by residue name and the range of residue IDs,
+followed by a plane normal vector and an angle. Using this syntax the random walk will be
+restricted by the following rule: <em>A step is only allowed if the angle between the step vector
+and a vector specified in the <code>[rw_restriction]</code> directive is less than the angle specified in
+that same directive.</em> In our case we want the chains in the upper leaflet to be stretched in
+the positive z-direction and in the lower leaflet in the negative z-direction. Thus we specify
+the positive and negative z-axis as our reference vectors. The angle is set to 90 degrees,
+which effectively means a step can never go back in the z-direction but is free to move in x
+and y. Decreasing the angle will give even straighter chains. Using this build file the
+PEGylated bilayer brush is simply generated by running:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>polyply<span class="w"> </span>gen_coords<span class="w"> </span>-p<span class="w"> </span>system.top<span class="w"> </span>-o<span class="w"> </span>struct.gro<span class="w"> </span>-res<span class="w"> </span>PEO<span class="w"> </span>OHter<span class="w"> </span>-c<span class="w"> </span>bilayer_brush.gro<span class="w"> </span>-name<span class="w"> </span><span class="nb">test</span><span class="w"> </span>-box<span class="w"> </span><span class="m">8</span>.0<span class="w"> </span><span class="m">8</span>.0<span class="w"> </span><span class="m">33</span>.0<span class="w"> </span>-split<span class="w"> </span>POPE:HEAD-NH3:TAIL-PO4,GL1,GL2,C1A,D2A,C3A,C4A,C1B,C2B,C3B,C4B<span class="w"> </span>-b<span class="w"> </span>build_file.bld
+</code></pre></div>
+<p>Running this command will yield the desired polymer brush. Again, after solvating the system
+and running an energy minimization, the procedure is complete.</p>
+<h3 id="33-adding-water-and-ions">3.3 - Adding water and ions<a class="headerlink" href="#33-adding-water-and-ions" title="Permanent link">&para;</a></h3>
+<p>In principle, polyply can be used to add water as well as ions to structures. The only
+downside is that you will have to more or less accurately guess the number of water molecules
+and ions. However, it also has the advantage that you can exclude regions in space where
+water should not be added. For example, <code>gmx solvate</code> might add water to the lipid bilayer
+tail region, which can perturb the bilayer. Let us try water placement for the brush we just
+created. First, we need to add the water to the topology file. Add the following line to the
+topology file from the last step: <code>W 12412</code>. Next, we add the following entry to the build
+file:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>[ molecule ]
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>; molname
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>W  200 14412
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>[ rectangle ]
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>; resname start stop  inside-out  x  y  z    a  b  c
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>W  0  1   out               4.0 4.0 16.5  4.1 4.1 1.5
+</code></pre></div>
+<p>Now we invoke the rectangle directive, which looks very similar to the previous directive.
+However, in this case the syntax is:
+<code>&lt;resname&gt; &lt;starting resid&gt; &lt;last resid&gt; &lt;in or out&gt; &lt;x&gt; &lt;y&gt; &lt;z&gt; &lt;a&gt; &lt;b&gt; &lt;c&gt;</code>, where we
+specify a point and three distances along (a, b, c) from a central point to the faces of a
+rectangle. Together with the keyword <code>out</code> it means all water molecules need to be outside a
+rectangle defined by this syntax. After having edited all files, run the following command:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>polyply<span class="w"> </span>gen_coords<span class="w"> </span>-p<span class="w"> </span>system.top<span class="w"> </span>-o<span class="w"> </span>struct.gro<span class="w"> </span>-res<span class="w"> </span>PEO<span class="w"> </span>OHter<span class="w"> </span>-c<span class="w"> </span>bilayer_brush.gro<span class="w"> </span>-name<span class="w"> </span><span class="nb">test</span><span class="w"> </span>-box<span class="w"> </span><span class="m">8</span>.0<span class="w"> </span><span class="m">8</span>.0<span class="w"> </span><span class="m">33</span>.0<span class="w"> </span>-split<span class="w"> </span>POPE:HEAD-NH3:TAIL-PO4,GL1,GL2,C1A,D2A,C3A,C4A,C1B,C2B,C3B,C4B<span class="w"> </span>-b<span class="w"> </span>build_file.bld
+</code></pre></div>
+<p>After energy minimization, your system is ready to go. Note that PEGylated lipids are
+charged, so you need to add ions. It is possible to add ions with polyply, but note that in
+the Martini 3 itp files you need to give all ions different residue names first.</p>
+<h2 id="4-useful-notes">4 - Useful Notes<a class="headerlink" href="#4-useful-notes" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Implemented lipids: DPPE, POPE, DOPE.</li>
+<li>If you'd like another PEGylated lipid, please raise an issue and we'll help you asap. But
+  also make sure to give issue
+  <a href="https://github.com/marrink-lab/polyply_1.0/issues/167">#167</a> a quick look.</li>
+<li>In order to add PEGylated lipids to a vesicle, please have a look at
+  <a href="http://cgmartini.nl/index.php/2021-martini-online-workshop/tutorials/559-8-polyply">this tutorial</a>.</li>
+<li>Always run an energy minimization before running an NpT relaxation.</li>
+<li>To see other libraries implemented, run <code>polyply -list-lib</code>.</li>
+<li>This tutorial is affected by issue #530; thus resids for the lipid start at 0.</li>
+<li><strong>Currently, the Martini 3 PEG interacts too strongly with the bilayer. To get better
+  behavior, change the Q5 (i.e. phosphate)–SN3r interaction to 3.0 kJ/mol. This change
+  reproduces bilayer affinities compared to all-atom simulations and resolves the problem. If
+  you use these improved parameters please cite
+  <a href="https://doi.org/10.33612/diss.756637591">10.33612/diss.756637591</a>. For a detailed
+  discussion please consult Chapter 5, Section 3.5 of
+  <a href="https://doi.org/10.33612/diss.756637591">10.33612/diss.756637591</a>. Otherwise, the Martini 2
+  PEG parameters reproduce experimental trends in the bilayer–PEG interactions better.</strong></li>
+<li>The PEG Martini 2 parameters are not part of the default <code>martini.itp</code> bead definitions.
+  The special parameters including PEG can be found
+  <a href="http://cgmartini.nl/index.php/force-field-parameters/polymers2/442-polymers.html?dir=Linear&amp;lipid=PEG">here</a>.</li>
+</ul>
+<h2 id="5-references">5 - References<a class="headerlink" href="#5-references" title="Permanent link">&para;</a></h2>
+<p>[1] Grünewald, F., Rossi, G., de Vries, A.H., Marrink, S.J. and Monticelli, L., 2018.
+Transferable MARTINI model of poly(ethylene oxide). <em>The Journal of Physical Chemistry B</em>,
+122(29), pp.7436-7449.</p>
+<p>[2] Lee, H. and Larson, R.G., 2016. Adsorption of plasma proteins onto PEGylated lipid
+bilayers: the effect of PEG size and grafting density. <em>Biomacromolecules</em>, 17(5),
+pp.1757-1765.</p>
+<p>[3] Lee, H. and Pastor, R.W., 2011. Coarse-grained model for PEGylated lipids: effect of
+PEGylation on the size and shape of self-assembled structures. <em>The Journal of Physical
+Chemistry B</em>, 115(24), pp.7830-7837.</p>
+<p>[4] Souza, P.C., Alessandri, R., Barnoud, J., Thallmair, S., Faustino, I., Grünewald, F.,
+Patmanidis, I., Abdizadeh, H., Bruininks, B.M., Wassenaar, T.A. and Kroon, P.C., 2021. Martini
+3: a general purpose force field for coarse-grained molecular dynamics. <em>Nature Methods</em>,
+18(4), pp.382-388.</p>
+<p>[5] Grünewald, Fabian. "Material design using Martini: Accelerating discovery through
+coarse-grained simulations." (2023).</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../gromos-polymer-melts/" class="md-footer__link md-footer__link--prev" aria-label="Previous: GROMOS Polymer Melts">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                GROMOS Polymer Melts
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../single-stranded-dna/" class="md-footer__link md-footer__link--next" aria-label="Next: Single-Stranded DNA">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Single-Stranded DNA
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2020 University of Groningen — Apache 2.0 License
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.sections", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
