@@ -1129,11 +1129,11 @@ following basic structure. Run <code>polyply gen_params -h</code> for more optio
 </code></pre></div>
 <p>To generate PEO of length 200 we simply need to provide the library name using <code>-lib</code>, a
 name for the itp file using <code>-o</code>, a name using <code>-name</code>, and the sequence of the polymer
-using <code>-seq</code>. In this case, the sequence is just 200 residues of PEO (i.e. <code>-seq PEO:200</code>).
+using <code>-seq</code>. In this case, the sequence is just 200 residues of EO (i.e. <code>-seq EO:200</code>).
 The full command would be:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>polyply<span class="w"> </span>gen_params<span class="w"> </span>-lib<span class="w"> </span>martini3<span class="w"> </span>-o<span class="w"> </span>PEO200.itp<span class="w"> </span>-name<span class="w"> </span>PEO<span class="w"> </span>-seq<span class="w"> </span>PEO:200
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>polyply<span class="w"> </span>gen_params<span class="w"> </span>-lib<span class="w"> </span>martini3<span class="w"> </span>-o<span class="w"> </span>PEO200.itp<span class="w"> </span>-name<span class="w"> </span>PEO<span class="w"> </span>-seq<span class="w"> </span>EO:200
 </code></pre></div>
-<p>This generates the required itp file. To do the same for PS simply change PEO to PS. If you
+<p>This generates the required itp file. To do the same for PS simply change EO to STYR. If you
 need more complex linear polymer sequences, you can provide a text file with a list of
 residues and provide it using the <code>-seqf</code> option. Branched polymers are also possible to
 generate itp files for, but you have to provide a networkx <code>.json</code> describing the graph of

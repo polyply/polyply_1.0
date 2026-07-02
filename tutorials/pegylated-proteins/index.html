@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#tutorial-pegylated-proteins" class="md-skip">
+        <a href="#polyply-tutorial-pegylation" class="md-skip">
           Skip to content
         </a>
       
@@ -573,6 +573,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PEGylated Proteins
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -589,6 +607,58 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Table of Contents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -879,6 +949,47 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Table of Contents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -897,15 +1008,364 @@
   
 
 
-<h1 id="tutorial-pegylated-proteins">Tutorial: PEGylated Proteins<a class="headerlink" href="#tutorial-pegylated-proteins" title="Permanent link">&para;</a></h1>
-<p>For a tutorial on PEGylated proteins we have recently published a book chapter, which can be
-found <a href="http://cgmartini.nl/images/structural-genomics-chap18.pdf">here</a>.</p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Please note that the current tutorial/protocol is out of date with polyply. Check out
-<a href="https://github.com/marrink-lab/polyply_1.0/discussions/261">this discussion</a> for the
-most recent commands.</p>
+<h1 id="polyply-tutorial-pegylation">Polyply Tutorial PEGylation<a class="headerlink" href="#polyply-tutorial-pegylation" title="Permanent link">&para;</a></h1>
+<p><a href="https://mybinder.org/v2/gh/polyply/PEGylation/main?labpath=tutorial_data%2FPEGylatedProteins.ipynb"><img alt="Binder" src="https://mybinder.org/badge_logo.svg" /></a></p>
+<h2 id="table-of-contents">Table of Contents<a class="headerlink" href="#table-of-contents" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="#00-auxilliary-functions-for-plotting">0.0 Auxilliary Functions for Plotting</a></li>
+<li><a href="#10-generating-protein-simulation-paramters">1.0 Generating Protein Simulation Parameters</a></li>
+<li><a href="#20-generating-pegylated-protein-parameters">2.0 Generating PEGylated Protein Parameters</a></li>
+<li><a href="#3-structure-generation-and-simulation-of-pegylated-proteins">3.0 Structure generation and simulation of PEGylated Proteins</a></li>
+<li><a href="#pasylation">4.0 PASylation</a></li>
+<li><a href="#pasylation-coordinates">5.0 PASylation coordinates</a></li>
+</ul>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
+<p>Enhancement of proteins by conjugation polymers is an active area of research. However, the interactions between polymers and proteins are far from fully understood. To gain better insight into these interactions or even make predictions, molecular dynamics (MD) simulations can be applied to study specific protein-polymer systems in molecular detail. Here, we present instructions for simulating protein-polymer conjugates using the latest iteration of the Martini coarse-grained (CG) force field. In particular, site-specific PEGylations and PASylations are discussed as examples illustrating the more general approach.</p>
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
+<ul>
+<li>polyply (use GH version <code>pip install git+https://github.com/fgrunewald/polyply_1.0.git#polyply_1.0</code>)</li>
+<li>Protein Repair and Analysis Server (<code>pip install Pras-Server==1.2.1</code>)</li>
+<li>vermouth-martinize (automatically installed together with polyply)</li>
+<li>cgsmiles (<code>pip install cgsmiles</code>)</li>
+<li>GROMACS (conda install -c bioconda -c conda-forge gromacs)</li>
+<li>gromacs-wrapper (<code>pip install pip install GromacsWrapper</code> or <code>conda install -c conda-forge gromacswrapper</code>)</li>
+<li>Download the Martini <a href="https://github.com/marrink-lab/martini-forcefields/tree/main/martini_forcefields/regular/v3.0.0/gmx_files">Force Field</a></li>
+</ul>
+<h1 id="00-auxilliary-functions-for-plotting">0.0 Auxilliary Functions for Plotting<a class="headerlink" href="#00-auxilliary-functions-for-plotting" title="Permanent link">&para;</a></h1>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">cgsmiles.drawing</span> <span class="kn">import</span> <span class="n">draw_molecule</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">from</span> <span class="nn">polyply.src.simple_seq_parsers</span> <span class="kn">import</span> <span class="n">ONE_LETTER_AA</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="kn">import</span> <span class="nn">os</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="kn">import</span> <span class="nn">nglview</span> <span class="k">as</span> <span class="nn">nv</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">AA_LETTER_ONE</span> <span class="o">=</span> <span class="p">{</span><span class="n">j</span><span class="p">:</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">ONE_LETTER_AA</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="k">def</span> <span class="nf">resname_to_one_letter</span><span class="p">(</span><span class="n">protein</span><span class="p">):</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    <span class="n">mapping</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;ALA&quot;</span><span class="p">:</span> <span class="s2">&quot;A&quot;</span><span class="p">}</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    <span class="n">labels</span> <span class="o">=</span> <span class="p">{}</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">protein</span><span class="p">:</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>        <span class="n">resname</span> <span class="o">=</span> <span class="n">protein</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="s1">&#39;resname&#39;</span><span class="p">]</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>        <span class="n">resid</span> <span class="o">=</span> <span class="n">protein</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="s1">&#39;resid&#39;</span><span class="p">]</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>        <span class="n">labels</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="n">AA_LETTER_ONE</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">resname</span><span class="p">,</span> <span class="n">resname</span><span class="p">)</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">resid</span><span class="p">)</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>    <span class="k">return</span> <span class="n">labels</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="n">cwd</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+</code></pre></div>
+<h1 id="10-generating-protein-simulation-paramters">1.0 Generating Protein Simulation Paramters<a class="headerlink" href="#10-generating-protein-simulation-paramters" title="Permanent link">&para;</a></h1>
+<p>Start by downloading a protein structure file (.cif) of Lysozyme from the <a href="https://www.rcsb.org/structure/3LZT">RCSB PDB</a>. First we need to fix any structural issues with the protein coordinates and add the hydrogen atoms. The protein repair and analysis server will take care of it and produce the <code>3LZT_out.cif</code>, required to martinize the protein.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">import</span> <span class="nn">time</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kn">from</span> <span class="nn">Pras_Server.RunType</span> <span class="kn">import</span> <span class="n">InitRunType</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="kn">from</span> <span class="nn">Pras_Server.PDBID</span> <span class="kn">import</span>  <span class="n">_82_pdbs</span><span class="p">,</span> <span class="n">_494_pdbs</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">startTime</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="n">fixing</span> <span class="o">=</span> <span class="n">InitRunType</span><span class="p">(</span> <span class="n">rotamer</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">mutation</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">pdb_faspr</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">keep_ligand</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">chain_no</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> 
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>              <span class="n">addh</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ss</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">raman</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ofname</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">pdbid</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;3LZT.cif&quot;</span><span class="p">],</span> <span class="n">his_p</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="n">fixing</span><span class="o">.</span><span class="n">ProcessWithoutDefaultUsingPDBID</span><span class="p">()</span>
+</code></pre></div>
+<p>Then we can run martinize2 to produce a coarse-grained model for lysozyme using a Go model structural bias.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>martinize2<span class="w"> </span>-f<span class="w"> </span><span class="s1">&#39;3LZT_out.cif&#39;</span><span class="w"> </span>-ff<span class="w"> </span><span class="s1">&#39;martini3001&#39;</span><span class="w"> </span>-o<span class="w"> </span><span class="s1">&#39;3lzt.top&#39;</span><span class="w"> </span>-x<span class="w"> </span><span class="s1">&#39;3lzt.pdb&#39;</span><span class="w"> </span>-dssp<span class="w"> </span>-go
+</code></pre></div>
+<p>Before we proceed it is recommended to center the protein in a box.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>gmx<span class="w"> </span>editconf<span class="w"> </span>-f<span class="w"> </span>3lzt.pdb<span class="w"> </span>-o<span class="w"> </span>3lzt_center.pdb<span class="w"> </span>-box<span class="w"> </span><span class="m">10</span>.<span class="w"> </span><span class="m">10</span>.<span class="w"> </span><span class="m">10</span>.<span class="w"> </span>-center<span class="w"> </span><span class="m">5</span>.<span class="w"> </span><span class="m">5</span>.<span class="w"> </span><span class="m">5</span>
+</code></pre></div>
+<h1 id="20-generating-pegylated-protein-parameters">2.0 Generating PEGylated Protein Parameters<a class="headerlink" href="#20-generating-pegylated-protein-parameters" title="Permanent link">&para;</a></h1>
+<p>Before we start we need to import the <code>gen_params</code> function, which will generate the simulation input paramters. Additionally, we need the <code>MetaMolecule</code> object that stores the residue graph of our PEGylated protein. The <code>force_field</code> object is a storage class, that collects all molecule definitions. </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kn">from</span> <span class="nn">vermouth.forcefield</span> <span class="kn">import</span> <span class="n">ForceField</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="kn">from</span> <span class="nn">polyply</span> <span class="kn">import</span> <span class="n">gen_params</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="kn">from</span> <span class="nn">polyply.src.meta_molecule</span> <span class="kn">import</span> <span class="n">MetaMolecule</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="n">ff</span> <span class="o">=</span> <span class="n">ForceField</span><span class="p">(</span><span class="s2">&quot;PEGylation&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>First we load the itp file generated by vermouth to extract the residue graph / sequence of the protein</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># step 1: load protein residue graph from ITP file</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">itp_file</span><span class="o">=</span><span class="s2">&quot;molecule.itp&quot;</span> 
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="n">protein</span> <span class="o">=</span> <span class="n">MetaMolecule</span><span class="o">.</span><span class="n">from_itp</span><span class="p">(</span><span class="n">force_field</span><span class="o">=</span><span class="n">ff</span><span class="p">,</span> 
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>                                <span class="n">itp_file</span><span class="o">=</span><span class="s2">&quot;molecule.itp&quot;</span><span class="p">,</span> 
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>                                <span class="n">mol_name</span><span class="o">=</span><span class="s2">&quot;molecule&quot;</span><span class="p">)</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="c1"># needed for plotting</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="n">nx</span><span class="o">.</span><span class="n">set_edge_attributes</span><span class="p">(</span><span class="n">protein</span><span class="p">,</span> <span class="mi">1</span> <span class="p">,</span> <span class="s1">&#39;order&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p>Using the cgsmiles draw_molecule utility we can draw the sequence graph of the protein. The labels function will annotate each node with the one letter amino acid code and the residue index. </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">from</span> <span class="nn">cgsmiles.drawing</span> <span class="kn">import</span> <span class="n">draw_molecule</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="n">labels</span> <span class="o">=</span> <span class="n">resname_to_one_letter</span><span class="p">(</span><span class="n">protein</span><span class="p">)</span>
+</code></pre></div>
+<p>Furthermore, we highlight the all LYS residues in green and the Cysteine residues in yellow.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">colors</span><span class="o">=</span><span class="p">{</span><span class="n">idx</span><span class="p">:</span> <span class="s1">&#39;lightgray&#39;</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">130</span><span class="p">)}</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">protein</span><span class="o">.</span><span class="n">nodes</span><span class="p">:</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>    <span class="k">if</span> <span class="n">protein</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="s1">&#39;resname&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;CYS&#39;</span><span class="p">:</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>        <span class="n">colors</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;gold&#39;</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>    <span class="k">if</span> <span class="n">protein</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="s1">&#39;resname&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;PHE&#39;</span><span class="p">:</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>        <span class="n">colors</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;tab:green&#39;</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span><span class="mi">30</span><span class="p">))</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="n">_</span> <span class="o">=</span> <span class="n">draw_molecule</span><span class="p">(</span><span class="n">protein</span><span class="p">,</span> 
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>                  <span class="n">cg_mapping</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> 
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>                  <span class="n">layout_method</span><span class="o">=</span><span class="s1">&#39;vespr&#39;</span><span class="p">,</span> 
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>                  <span class="n">colors</span><span class="o">=</span><span class="n">colors</span><span class="p">,</span> 
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>                  <span class="n">scale</span><span class="o">=</span><span class="mf">1.1</span><span class="p">,</span> 
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>                  <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>                  <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+</code></pre></div>
+<p>The graph shows us several interesting things. First, we can see that the residue graph is not just linear due to the cysteine brdiges being formed. We can also see that all Cysteines are participating in those rendering them typically inaccesible to PEGylation. Therefore, let's take PHE34 (F34) as target. </p>
+<p>Next, we need to define the residue graph of the polymer that we want to add to the protein. For PEGylation that is simply PEG, but we also need to define the chemical linker that syntehtically connnects PEG to the protein. Polyply offers 5 different linker types arising from typical chemistries of synthetically linking PEG to a protein. Phenyalaline like residues can be targeted by replacing them with the non-nantural amino acid 4-Azido-L-phenylalanine and performing click chemistry. Within polyply the resulting fragment is called APA and can be directly linked to any Phenylalanine.</p>
+<p>To define the residue graph of the polymer we use a CGsmiles string. CGsmiles can describe abitary resolutions of molecules and their connectivity. </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># step 2: load PEG residue graph from CGsmiles string</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="n">cgsmiles_str</span><span class="o">=</span><span class="s2">&quot;{[#APA][#EO]|10[#OHter]}&quot;</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="n">polymer</span> <span class="o">=</span> <span class="n">MetaMolecule</span><span class="o">.</span><span class="n">from_cgsmiles_str</span><span class="p">(</span><span class="n">force_field</span><span class="o">=</span><span class="n">ff</span><span class="p">,</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>                                         <span class="n">cgsmiles_str</span><span class="o">=</span><span class="n">cgsmiles_str</span><span class="p">,</span> 
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>                                         <span class="n">mol_name</span><span class="o">=</span><span class="s2">&quot;PEO&quot;</span><span class="p">)</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="c1"># needed for plotting only</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="n">nx</span><span class="o">.</span><span class="n">set_edge_attributes</span><span class="p">(</span><span class="n">protein</span><span class="p">,</span> <span class="mi">1</span> <span class="p">,</span> <span class="s1">&#39;order&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p>Using the draw molecules function, we can again draw the residue graph and see that this one is indeed linear. </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="n">colors</span> <span class="o">=</span> <span class="p">{}</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">polymer</span><span class="o">.</span><span class="n">nodes</span><span class="p">:</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>    <span class="k">if</span>  <span class="n">polymer</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="s1">&#39;resname&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;EO&#39;</span><span class="p">:</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>        <span class="n">colors</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;gold&#39;</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>    <span class="k">elif</span>  <span class="n">polymer</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="s1">&#39;resname&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;OHter&#39;</span><span class="p">:</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>        <span class="n">colors</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;blue&#39;</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>    <span class="k">elif</span>  <span class="n">polymer</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="s1">&#39;resname&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;APA&#39;</span><span class="p">:</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>        <span class="n">colors</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;pink&#39;</span>
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="n">labels</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">get_node_attributes</span><span class="p">(</span><span class="n">polymer</span><span class="p">,</span> <span class="s1">&#39;resname&#39;</span><span class="p">)</span>
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="n">_</span> <span class="o">=</span> <span class="n">draw_molecule</span><span class="p">(</span><span class="n">polymer</span><span class="p">,</span> 
+<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>              <span class="n">cg_mapping</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>              <span class="n">layout_method</span><span class="o">=</span><span class="s1">&#39;vespr&#39;</span><span class="p">,</span> 
+<a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a>              <span class="n">colors</span><span class="o">=</span><span class="n">colors</span><span class="p">,</span> 
+<a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a>              <span class="n">scale</span><span class="o">=</span><span class="mf">1.1</span><span class="p">,</span> 
+<a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a>              <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span>
+<a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a>              <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
+<a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a>              <span class="n">align_with</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p>Now, we can add the polymer to the protein by merging the two <code>MetaMolecule</code> objects and specifying which residue connects the protein to the polymer.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note that the indinces start at zero.</p>
 </div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1"># step 3: add PEG to protein and connect K33 to first PEG unit</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="n">protein</span><span class="o">.</span><span class="n">merge_meta_mol</span><span class="p">(</span><span class="n">polymer</span><span class="p">,</span> <span class="n">connects</span><span class="o">=</span><span class="p">[(</span><span class="mi">33</span><span class="p">,</span> <span class="mi">0</span><span class="p">)])</span>
+</code></pre></div>
+<p>Again the residue graph can be drawn. </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="n">colors</span> <span class="o">=</span> <span class="p">{}</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="n">labels</span> <span class="o">=</span> <span class="n">resname_to_one_letter</span><span class="p">(</span><span class="n">protein</span><span class="p">)</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">protein</span><span class="o">.</span><span class="n">nodes</span><span class="p">:</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>    <span class="k">if</span>  <span class="n">protein</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="s1">&#39;resname&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;EO&#39;</span><span class="p">:</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>        <span class="n">colors</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;gold&#39;</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>    <span class="k">elif</span>  <span class="n">protein</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="s1">&#39;resname&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;OHter&#39;</span><span class="p">:</span>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>        <span class="n">colors</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;blue&#39;</span>
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>    <span class="k">elif</span>  <span class="n">protein</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="s1">&#39;resname&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;APA&#39;</span><span class="p">:</span>
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>        <span class="n">colors</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;pink&#39;</span>
+<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>    <span class="k">elif</span> <span class="n">protein</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="s1">&#39;resname&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;PHE&#39;</span><span class="p">:</span>
+<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>        <span class="n">colors</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;green&#39;</span>
+<a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>    <span class="k">else</span><span class="p">:</span> 
+<a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a>        <span class="n">colors</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;lightgray&#39;</span>
+<a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a>
+<a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a>
+<a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span><span class="mi">30</span><span class="p">))</span>
+<a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a><span class="n">_</span> <span class="o">=</span> <span class="n">draw_molecule</span><span class="p">(</span><span class="n">protein</span><span class="p">,</span> 
+<a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a>                  <span class="n">cg_mapping</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> 
+<a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a>                  <span class="n">layout_method</span><span class="o">=</span><span class="s1">&#39;vespr&#39;</span><span class="p">,</span> 
+<a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a>                  <span class="n">colors</span><span class="o">=</span><span class="n">colors</span><span class="p">,</span> 
+<a id="__codelineno-12-21" name="__codelineno-12-21" href="#__codelineno-12-21"></a>                  <span class="n">scale</span><span class="o">=</span><span class="mf">1.1</span><span class="p">,</span> 
+<a id="__codelineno-12-22" name="__codelineno-12-22" href="#__codelineno-12-22"></a>                  <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span>
+<a id="__codelineno-12-23" name="__codelineno-12-23" href="#__codelineno-12-23"></a>                  <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+</code></pre></div>
+<p>Finally, the parameters are generated using the <code>gen_params</code> utility. As input we need to define the <code>molecule.itp</code> file from the <code>martinize2</code> step and the martini3 library storing the PEGylation paramters. This call will write the <code>lysoPEG.itp</code> file that stores all simulation input paramters. </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="n">gen_params</span><span class="p">(</span><span class="n">inpath</span><span class="o">=</span><span class="p">[</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;molecule.itp&quot;</span><span class="p">)],</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>           <span class="n">lib</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;martini3&quot;</span><span class="p">],</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>           <span class="n">meta_molecule</span><span class="o">=</span><span class="n">protein</span><span class="p">,</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>           <span class="n">name</span><span class="o">=</span><span class="s2">&quot;lysoPEG&quot;</span><span class="p">,</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>           <span class="n">outpath</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;lysoPEG.itp&quot;</span><span class="p">))</span>
+</code></pre></div>
+<h1 id="3-structure-generation-and-simulation-of-pegylated-proteins">3 Structure generation and simulation of PEGylated Proteins<a class="headerlink" href="#3-structure-generation-and-simulation-of-pegylated-proteins" title="Permanent link">&para;</a></h1>
+<p>Before we can start the simulation, one needs the input coordinates. For the protein part they are directly transformed from the PDB structure file using Martinize2. To generate the solvate the system and generate the polymer coordinates, we use the <code>gen_coords</code> utility. It's input is the GROMACS topology file and the coordinates of the protein. <code>gen_coords</code> will automatically create all the missing coordinates. </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="n">toplines</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;#include &quot;martini_v3.0.0.itp&quot;</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="s2">#include &quot;go_atomtypes.itp&quot;</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="s2">#include &quot;go_nbparams.itp&quot;</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="s2">#include &quot;martini_v3.0.0_solvents_v1.itp&quot;</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="s2">#include &quot;martini_v3.0.0_ions_v1.itp&quot;</span>
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="s2">#include &quot;lysoPEG.itp&quot;</span>
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="s2">[ system ]</span>
+<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a><span class="s2">Title of the system</span>
+<a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a>
+<a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a><span class="s2">[ molecules ]</span>
+<a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a><span class="s2">lysoPEG 1</span>
+<a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a><span class="s2">W 10000</span>
+<a id="__codelineno-14-14" name="__codelineno-14-14" href="#__codelineno-14-14"></a><span class="s2">NA 100</span>
+<a id="__codelineno-14-15" name="__codelineno-14-15" href="#__codelineno-14-15"></a><span class="s2">CL 108&quot;&quot;&quot;</span>
+<a id="__codelineno-14-16" name="__codelineno-14-16" href="#__codelineno-14-16"></a><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;lysoPEG.top&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">_file</span><span class="p">:</span>
+<a id="__codelineno-14-17" name="__codelineno-14-17" href="#__codelineno-14-17"></a>    <span class="n">_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">toplines</span><span class="p">)</span>
+</code></pre></div>
+<p>In the <code>gen_coords</code> the <strong>martini density</strong> of the system needs to be specified.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note that for aqueous systems it is close to 1000.</p>
+</div>
+<p>For polymer systems it might singifcantly deviate.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="kn">from</span> <span class="nn">polyply</span> <span class="kn">import</span> <span class="n">gen_coords</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="kn">import</span> <span class="nn">gromacs</span> <span class="k">as</span> <span class="nn">gmx</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="kn">import</span> <span class="nn">os</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="c1"># step 1: generate the missing PEGylation coordinates and solvate</span>
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="n">gen_coords</span><span class="p">(</span><span class="n">toppath</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;lysoPEG.top&quot;</span><span class="p">),</span> 
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>           <span class="n">density</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> 
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>           <span class="n">outpath</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;lyso_PEG_start.gro&quot;</span><span class="p">),</span> 
+<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>           <span class="n">coordpath</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;3lzt_center.pdb&quot;</span><span class="p">),</span>
+<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a>           <span class="n">name</span><span class="o">=</span><span class="s2">&quot;lysoPEG&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>After coordinate generation they need to be relaxed and then we can run a simulaiton. The functions below perform an energy minimization followed by nvt and npt equilibriation. </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="n">sim_dir</span><span class="o">=</span><span class="s2">&quot;simulation&quot;</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">sim_dir</span><span class="p">)</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">sim_dir</span><span class="p">)</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a> <span class="n">step</span> <span class="mi">2</span><span class="p">:</span> <span class="n">equilibriate</span> <span class="n">the</span> <span class="n">system</span> <span class="ow">and</span> <span class="n">start</span> <span class="n">production</span> <span class="n">simulation</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="n">prev_stage</span><span class="o">=</span><span class="s2">&quot;../start&quot;</span>
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="k">for</span> <span class="n">stage</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;mini&quot;</span><span class="p">,</span> <span class="s2">&quot;nvt&quot;</span><span class="p">,</span> <span class="s2">&quot;prod&quot;</span><span class="p">]:</span>
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>    <span class="n">gmx</span><span class="o">.</span><span class="n">grompp</span><span class="p">(</span><span class="n">f</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;../cg_mdps/</span><span class="si">{</span><span class="n">stage</span><span class="si">}</span><span class="s2">.mdp&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>               <span class="n">c</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prev_stage</span><span class="si">}</span><span class="s2">.gro&quot;</span><span class="p">,</span> 
+<a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>               <span class="n">p</span><span class="o">=</span><span class="s2">&quot;../lysoPEG.top&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a>               <span class="n">o</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">stage</span><span class="si">}</span><span class="s2">.tpr&quot;</span><span class="p">)</span>
+<a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a>    <span class="n">gmx</span><span class="o">.</span><span class="n">mdrun</span><span class="p">(</span><span class="n">deffnm</span><span class="o">=</span><span class="n">stage</span><span class="p">,</span> 
+<a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a>              <span class="n">v</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> 
+<a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a>              <span class="n">s</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">stage</span><span class="si">}</span><span class="s2">.tpr&quot;</span><span class="p">)</span>
+<a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a>    <span class="n">prev_stage</span> <span class="o">=</span> <span class="n">stage</span>
+</code></pre></div>
+<h1 id="40-pasylation">4.0 PASylation<a class="headerlink" href="#40-pasylation" title="Permanent link">&para;</a></h1>
+<p>PASylation is an alternative to PEG conjugation, where sequences of Proline, Alanine, and Cysteine that are disordered and lack secondary structure motifs are attached to the protein at the termini via recombinant methods. To add PASylations to a protein and simulate it in the Martini 3 framework, the steps are nearly identical to those for N-terminal PEGylation. However, we need to generate a random PAS sequence that does not include repeats. This sequence can be obtained using the CGsmiles MoleculeSampler utility.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="kn">import</span> <span class="nn">os</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="kn">from</span> <span class="nn">cgsmiles</span> <span class="kn">import</span> <span class="n">MoleculeSampler</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="kn">from</span> <span class="nn">vermouth.forcefield</span> <span class="kn">import</span> <span class="n">ForceField</span>
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="kn">from</span> <span class="nn">polyply</span> <span class="kn">import</span> <span class="n">gen_params</span>
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="kn">from</span> <span class="nn">polyply.src.meta_molecule</span> <span class="kn">import</span> <span class="n">MetaMolecule</span>
+<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="kn">from</span> <span class="nn">cgsmiles.write_cgsmiles</span> <span class="kn">import</span> <span class="n">write_cgsmiles_graph</span>
+<a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="kn">import</span> <span class="nn">pysmiles</span>
+<a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a><span class="kn">import</span> <span class="nn">vermouth</span> 
+<a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a><span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+<a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a><span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">cwd</span><span class="p">)</span>
+</code></pre></div>
+<p>As input for the <code>MoleculeSampler</code> one needs to define the monomer structures of the three amino-acids of intrest (i.e. ALA, SER, PRO). This can be done either at all-atom or any other level of resolution (e.g. Martini). </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="c1"># step 1: define amino acids at Martini level and add two</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="c1"># bonding descriptors </span>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="n">amino_acids</span> <span class="o">=</span> <span class="s2">&quot;{#ALA=CC(C(=O)O[$AO])N[$AN],</span><span class="se">\</span>
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="s2">#SER=C(C(C(=O)O[$SO])N[$SN])O,</span><span class="se">\</span>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="s2">#PRO=C1CC(N[$PN]C1)C(=O)O[$PO]}&quot;</span>
+</code></pre></div>
+<p>In addition to the structures, reactivities between the different amino acids should be defined. It is important that PASylation avoids large stretches of homopolymer blocks. Therefore the reactivity between an amino acids and itself is set to zero. The dict below enumerates the reactivity between all the different bonding connects.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note that we could also set the probability of reacting with itself to a value smaller than the other depending on what outcome of a reaction we want to model.</p>
+</div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="c1"># step 2: define the probability a bonding connector can </span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="c1"># connect to another one</span>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="n">reactivities</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;$AO&quot;</span><span class="p">:{</span><span class="s2">&quot;$AO&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s2">&quot;$AN&quot;</span><span class="p">:</span><span class="mf">0.0</span><span class="p">,</span> <span class="s2">&quot;$PO&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s2">&quot;$PN&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s2">&quot;$SO&quot;</span><span class="p">:</span><span class="mf">0.5</span> <span class="p">,</span> <span class="s2">&quot;$SN&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">},</span>
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>                <span class="s2">&quot;$AN&quot;</span><span class="p">:{</span><span class="s2">&quot;$AO&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s2">&quot;$AN&quot;</span><span class="p">:</span><span class="mf">0.0</span><span class="p">,</span> <span class="s2">&quot;$PO&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s2">&quot;$PN&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s2">&quot;$SO&quot;</span><span class="p">:</span><span class="mf">0.0</span> <span class="p">,</span> <span class="s2">&quot;$SN&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">},</span>
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>                <span class="s2">&quot;$SO&quot;</span><span class="p">:{</span><span class="s2">&quot;$AO&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s2">&quot;$AN&quot;</span><span class="p">:</span><span class="mf">0.5</span><span class="p">,</span> <span class="s2">&quot;$PO&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s2">&quot;$PN&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s2">&quot;$SO&quot;</span><span class="p">:</span><span class="mf">0.0</span> <span class="p">,</span> <span class="s2">&quot;$SN&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">},</span>
+<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>                <span class="s2">&quot;$SN&quot;</span><span class="p">:{</span><span class="s2">&quot;$AO&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s2">&quot;$AN&quot;</span><span class="p">:</span><span class="mf">0.5</span><span class="p">,</span> <span class="s2">&quot;$PO&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s2">&quot;$PN&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s2">&quot;$SO&quot;</span><span class="p">:</span><span class="mf">0.0</span> <span class="p">,</span> <span class="s2">&quot;$SN&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">},</span>
+<a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a>                <span class="s2">&quot;$PO&quot;</span><span class="p">:{</span><span class="s2">&quot;$AO&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s2">&quot;$AN&quot;</span><span class="p">:</span><span class="mf">0.5</span><span class="p">,</span> <span class="s2">&quot;$PO&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s2">&quot;$PN&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s2">&quot;$SO&quot;</span><span class="p">:</span><span class="mf">0.5</span> <span class="p">,</span> <span class="s2">&quot;$SN&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">},</span>
+<a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a>                <span class="s2">&quot;$PN&quot;</span><span class="p">:{</span><span class="s2">&quot;$AO&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s2">&quot;$AN&quot;</span><span class="p">:</span><span class="mf">0.0</span><span class="p">,</span> <span class="s2">&quot;$PO&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s2">&quot;$PN&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s2">&quot;$SO&quot;</span><span class="p">:</span><span class="mf">0.0</span> <span class="p">,</span> <span class="s2">&quot;$SN&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">},</span>
+<a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a>               <span class="p">}</span>
+<a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a><span class="n">masses</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;ALA&quot;</span><span class="p">:</span> <span class="mf">89.094</span><span class="p">,</span><span class="s2">&quot;SER&quot;</span><span class="p">:</span> <span class="mf">105.093</span><span class="p">,</span> <span class="s2">&quot;PRO&quot;</span><span class="p">:</span> <span class="mf">115.132</span><span class="p">}</span>
+</code></pre></div>
+<p>With this in mind, we can now sample a random polymer/protein given a target molecular weight (<code>target_weigth</code>). The result is a graph of a random homopolymer of ALA, SER, PRO at full atomic resolution. We can start by making a very short peptide targeting only 500 g/mol. </p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The polymer_reactivities define how likely it is that a bonding descritor is chosen to "react". Setting them all to one gives equal likelihood.</p>
+</div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="c1"># step 3: generate a random sequence with a target molecular</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="c1"># weight; note that the weight of the AAs needs to be defined </span>
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="n">sampler</span> <span class="o">=</span> <span class="n">MoleculeSampler</span><span class="o">.</span><span class="n">from_fragment_string</span><span class="p">(</span><span class="n">amino_acids</span><span class="p">,</span>
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>                          <span class="n">polymer_reactivities</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;$AO&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;$AN&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;$PO&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;$PN&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;$SO&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;$SN&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">},</span>
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>                          <span class="n">fragment_reactivities</span><span class="o">=</span><span class="n">reactivities</span><span class="p">,</span>
+<a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>                          <span class="n">fragment_masses</span><span class="o">=</span><span class="n">masses</span><span class="p">,</span> <span class="n">all_atom</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a><span class="n">pas_graph</span> <span class="o">=</span> <span class="n">sampler</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">target_weight</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+</code></pre></div>
+<p>Let's draw the molecule. We remove the hydrogen atoms, for efficency. The coloring of the different residues is by amino acid name, so we can directly see if our protcol worked. </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="n">pysmiles</span><span class="o">.</span><span class="n">remove_explicit_hydrogens</span><span class="p">(</span><span class="n">pas_graph</span><span class="p">)</span>
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="n">colors</span> <span class="o">=</span> <span class="p">{}</span>
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="n">color_mapping</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;ALA&quot;</span><span class="p">:</span> <span class="s2">&quot;tab:blue&quot;</span><span class="p">,</span> <span class="s2">&quot;PRO&quot;</span><span class="p">:</span> <span class="s2">&quot;gold&quot;</span><span class="p">,</span> <span class="s2">&quot;SER&quot;</span><span class="p">:</span> <span class="s2">&quot;tab:orange&quot;</span><span class="p">}</span>
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a><span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">pas_graph</span><span class="o">.</span><span class="n">nodes</span><span class="p">:</span>
+<a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>    <span class="n">colors</span><span class="p">[</span><span class="n">pas_graph</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="s1">&#39;fragid&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">color_mapping</span><span class="p">[</span><span class="n">pas_graph</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="s1">&#39;fragname&#39;</span><span class="p">]]</span>
+<a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a><span class="n">_</span> <span class="o">=</span> <span class="n">draw_molecule</span><span class="p">(</span><span class="n">pas_graph</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">align_with</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="n">colors</span><span class="p">)</span>
+</code></pre></div>
+<p>As has already been introduced, polyply works on the level of a residue graph. So from the full molecule graph, we have to extract the residue graph. To do so we first convert the fragment index, which is a list for CGsmiles graphs, to the residue index and fragname to resname. Subsequently, <code>_block_graph_to_res_graph</code> from the <code>MetaMolecule</code> preparese the graph from which the MetaMolecule can be prepared.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="c1"># step 4: create the MetaMolecule </span>
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">pas_graph</span><span class="o">.</span><span class="n">nodes</span><span class="p">:</span>
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>    <span class="n">pas_graph</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="s1">&#39;resid&#39;</span><span class="p">]</span> <span class="o">=</span>  <span class="n">pas_graph</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="s1">&#39;fragid&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>    <span class="n">pas_graph</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="s1">&#39;resname&#39;</span><span class="p">]</span> <span class="o">=</span>  <span class="n">pas_graph</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="s1">&#39;fragname&#39;</span><span class="p">]</span>
+<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>
+<a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a><span class="n">tmp</span> <span class="o">=</span> <span class="n">MetaMolecule</span><span class="o">.</span><span class="n">_block_graph_to_res_graph</span><span class="p">(</span><span class="n">pas_graph</span><span class="p">)</span>
+<a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a><span class="n">pas_seq</span> <span class="o">=</span> <span class="n">MetaMolecule</span><span class="p">(</span><span class="n">tmp</span><span class="p">)</span>
+<a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;This peptide has </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">pas_seq</span><span class="p">)</span><span class="si">}</span><span class="s2"> residues.&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>Finally, obtaining the itp file works exactly the same way as for the PEGylation: 1) merging the PASylation onto the <code>MetaMolecule</code>, 2) giving it to the <code>gen_params</code>. </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="n">ff</span> <span class="o">=</span> <span class="n">ForceField</span><span class="p">(</span><span class="s2">&quot;PEGylation&quot;</span><span class="p">)</span>
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="c1"># step 5: load protein residue graph from ITP file</span>
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="n">protein</span> <span class="o">=</span> <span class="n">MetaMolecule</span><span class="o">.</span><span class="n">from_itp</span><span class="p">(</span><span class="n">force_field</span><span class="o">=</span><span class="n">ff</span><span class="p">,</span> 
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>                                <span class="n">itp_file</span><span class="o">=</span><span class="s2">&quot;molecule.itp&quot;</span><span class="p">,</span> 
+<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>                                <span class="n">mol_name</span><span class="o">=</span><span class="s2">&quot;molecule&quot;</span><span class="p">)</span>
+<a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>
+<a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a><span class="c1"># step 7: connect the last PAS residue to the first on lysozyme</span>
+<a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a><span class="n">protein</span><span class="o">.</span><span class="n">merge_meta_mol</span><span class="p">(</span><span class="n">pas_seq</span><span class="p">,</span> <span class="n">connects</span><span class="o">=</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)])</span>
+<a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a><span class="c1"># needed for plotting only</span>
+<a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a><span class="n">nx</span><span class="o">.</span><span class="n">set_edge_attributes</span><span class="p">(</span><span class="n">protein</span><span class="p">,</span> <span class="mi">1</span> <span class="p">,</span> <span class="s1">&#39;order&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p>To check that this works, we can draw the graph again:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="n">colors</span> <span class="o">=</span> <span class="p">{}</span>
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="n">labels</span> <span class="o">=</span> <span class="n">resname_to_one_letter</span><span class="p">(</span><span class="n">protein</span><span class="p">)</span>
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a><span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">protein</span><span class="o">.</span><span class="n">nodes</span><span class="p">:</span>
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>    <span class="n">colors</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span>  <span class="n">color_mapping</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">protein</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="s1">&#39;resname&#39;</span><span class="p">],</span> <span class="s1">&#39;lightgray&#39;</span><span class="p">)</span>
+<a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>
+<a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span><span class="mi">30</span><span class="p">))</span>
+<a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a><span class="n">_</span> <span class="o">=</span> <span class="n">draw_molecule</span><span class="p">(</span><span class="n">protein</span><span class="p">,</span> 
+<a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a>                  <span class="n">cg_mapping</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> 
+<a id="__codelineno-24-9" name="__codelineno-24-9" href="#__codelineno-24-9"></a>                  <span class="n">layout_method</span><span class="o">=</span><span class="s1">&#39;vespr&#39;</span><span class="p">,</span> 
+<a id="__codelineno-24-10" name="__codelineno-24-10" href="#__codelineno-24-10"></a>                  <span class="n">colors</span><span class="o">=</span><span class="n">colors</span><span class="p">,</span> 
+<a id="__codelineno-24-11" name="__codelineno-24-11" href="#__codelineno-24-11"></a>                  <span class="n">scale</span><span class="o">=</span><span class="mf">1.1</span><span class="p">,</span> 
+<a id="__codelineno-24-12" name="__codelineno-24-12" href="#__codelineno-24-12"></a>                  <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span>
+<a id="__codelineno-24-13" name="__codelineno-24-13" href="#__codelineno-24-13"></a>                  <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="n">gen_params</span><span class="p">(</span><span class="n">inpath</span><span class="o">=</span><span class="p">[</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;molecule.itp&quot;</span><span class="p">)],</span>
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>           <span class="n">outpath</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;lysoPAS.itp&quot;</span><span class="p">),</span>
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>           <span class="n">lib</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;martini3&quot;</span><span class="p">],</span>
+<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>           <span class="n">name</span><span class="o">=</span><span class="s2">&quot;lysoPAS&quot;</span><span class="p">,</span>
+<a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a>           <span class="n">meta_molecule</span><span class="o">=</span><span class="n">protein</span><span class="p">)</span>
+</code></pre></div>
+<h1 id="50-pasylation-coordinates">5.0 PASylation coordinates<a class="headerlink" href="#50-pasylation-coordinates" title="Permanent link">&para;</a></h1>
+<p>The coordinates can be generated in exactly the same fashion as before: 1) write a valid topology file; 2) run <code>gen_coords</code> providing the system target density. </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="n">toplines</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;#include &quot;martini_v3.0.0.itp&quot;</span>
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="s2">#include &quot;go_atomtypes.itp&quot;</span>
+<a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a><span class="s2">#include &quot;go_nbparams.itp&quot;</span>
+<a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a><span class="s2">#include &quot;martini_v3.0.0_solvents_v1.itp&quot;</span>
+<a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a><span class="s2">#include &quot;martini_v3.0.0_ions_v1.itp&quot;</span>
+<a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a><span class="s2">#include &quot;lysoPAS.itp&quot;</span>
+<a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a>
+<a id="__codelineno-26-8" name="__codelineno-26-8" href="#__codelineno-26-8"></a><span class="s2">[ system ]</span>
+<a id="__codelineno-26-9" name="__codelineno-26-9" href="#__codelineno-26-9"></a><span class="s2">Title of the system</span>
+<a id="__codelineno-26-10" name="__codelineno-26-10" href="#__codelineno-26-10"></a>
+<a id="__codelineno-26-11" name="__codelineno-26-11" href="#__codelineno-26-11"></a><span class="s2">[ molecules ]</span>
+<a id="__codelineno-26-12" name="__codelineno-26-12" href="#__codelineno-26-12"></a><span class="s2">lysoPAS 1</span>
+<a id="__codelineno-26-13" name="__codelineno-26-13" href="#__codelineno-26-13"></a><span class="s2">W 10000</span>
+<a id="__codelineno-26-14" name="__codelineno-26-14" href="#__codelineno-26-14"></a><span class="s2">NA 100</span>
+<a id="__codelineno-26-15" name="__codelineno-26-15" href="#__codelineno-26-15"></a><span class="s2">CL 108&quot;&quot;&quot;</span>
+<a id="__codelineno-26-16" name="__codelineno-26-16" href="#__codelineno-26-16"></a><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;lysoPAS.top&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">_file</span><span class="p">:</span>
+<a id="__codelineno-26-17" name="__codelineno-26-17" href="#__codelineno-26-17"></a>    <span class="n">_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">toplines</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="kn">from</span> <span class="nn">polyply</span> <span class="kn">import</span> <span class="n">gen_coords</span>
+<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a><span class="kn">import</span> <span class="nn">gromacs</span> <span class="k">as</span> <span class="nn">gmx</span>
+<a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="kn">import</span> <span class="nn">os</span>
+<a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a>
+<a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a><span class="c1"># step 1: generate the missing PEGylation coordinates and solvate</span>
+<a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a><span class="n">gen_coords</span><span class="p">(</span><span class="n">toppath</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;lysoPAS.top&quot;</span><span class="p">),</span> 
+<a id="__codelineno-27-7" name="__codelineno-27-7" href="#__codelineno-27-7"></a>           <span class="n">density</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> 
+<a id="__codelineno-27-8" name="__codelineno-27-8" href="#__codelineno-27-8"></a>           <span class="n">outpath</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;start.gro&quot;</span><span class="p">),</span> 
+<a id="__codelineno-27-9" name="__codelineno-27-9" href="#__codelineno-27-9"></a>           <span class="n">coordpath</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;3lzt_center.pdb&quot;</span><span class="p">),</span>
+<a id="__codelineno-27-10" name="__codelineno-27-10" href="#__codelineno-27-10"></a>           <span class="n">name</span><span class="o">=</span><span class="s2">&quot;lysoPAS&quot;</span><span class="p">)</span>
+</code></pre></div>
 
 
 

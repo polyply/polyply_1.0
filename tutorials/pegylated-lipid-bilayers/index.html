@@ -1153,29 +1153,29 @@ the Martini 3 [4] force-field files, which also contain the lipid definitions
 (<code>martini300/martini_v3.0.0_phospholipids_v1.itp</code>). Note that connecting PEG to lipids is
 currently only supported for 3 lipids (DPPE, POPE, DOPE). Once we have the parameter files we
 simply invoke the itp file generation tool (<code>polyply gen_params</code>) as follows:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>polyply<span class="w"> </span>gen_params<span class="w"> </span>-f<span class="w"> </span>martini_v3.0.0_phospholipids_v1.itp<span class="w"> </span>-lib<span class="w"> </span>martini3<span class="w"> </span>-o<span class="w"> </span>pegylated_lipid.itp<span class="w"> </span>-name<span class="w"> </span>PEL<span class="w"> </span>-seq<span class="w"> </span>&lt;lipid-name&gt;:1<span class="w"> </span>PEO:&lt;number<span class="w"> </span>of<span class="w"> </span>monomers&gt;
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>polyply<span class="w"> </span>gen_params<span class="w"> </span>-f<span class="w"> </span>martini_v3.0.0_phospholipids_v1.itp<span class="w"> </span>-lib<span class="w"> </span>martini3<span class="w"> </span>-o<span class="w"> </span>pegylated_lipid.itp<span class="w"> </span>-name<span class="w"> </span>PEL<span class="w"> </span>-seq<span class="w"> </span>&lt;lipid-name&gt;:1<span class="w"> </span>EO:&lt;number<span class="w"> </span>of<span class="w"> </span>monomers&gt;
 </code></pre></div>
 <p>For this command, we have to provide the lipid itp file using the <code>-f</code> flag. Next, we have to
 tell polyply we want to use the library of Martini 3 using <code>-lib martini3</code>. Besides the name
 of the output file provided with the <code>-o</code> flag and the name of the molecule set by <code>-name</code>,
 we also need to define the macromolecule residue graph, which in this case is a linear
 sequence. We want one lipid molecule (i.e. <code>&lt;lipid-name&gt;:1</code>) to be connected to several
-monomers of PEO (i.e. <code>PEO:&lt;number of monomers&gt;</code>). The lipid name is the molecule name
+monomers of PEO (i.e. <code>EO:&lt;number of monomers&gt;</code>). The lipid name is the molecule name
 specified in the lipid itp file.</p>
 <p>Let us generate a specific example, namely PEGylated POPE with 50 residues of PEG terminated
 with an OH group. We will use this lipid as an example in the rest of the tutorial. To
 generate the itp file, run the following command:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>polyply<span class="w"> </span>gen_params<span class="w"> </span>-f<span class="w"> </span>martini_v3.0.0_phospholipids_v1.itp<span class="w"> </span>-lib<span class="w"> </span>martini3<span class="w"> </span>-o<span class="w"> </span>PEL.itp<span class="w"> </span>-name<span class="w"> </span>PEL<span class="w"> </span>-seq<span class="w"> </span>POPE:1<span class="w"> </span>PEO:50<span class="w"> </span>OHter:1
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>polyply<span class="w"> </span>gen_params<span class="w"> </span>-f<span class="w"> </span>martini_v3.0.0_phospholipids_v1.itp<span class="w"> </span>-lib<span class="w"> </span>martini3<span class="w"> </span>-o<span class="w"> </span>PEL.itp<span class="w"> </span>-name<span class="w"> </span>PEL<span class="w"> </span>-seq<span class="w"> </span>POPE:1<span class="w"> </span>EO:50<span class="w"> </span>OHter:1
 </code></pre></div>
 <h2 id="3-generating-starting-coordinates">3 - Generating starting coordinates<a class="headerlink" href="#3-generating-starting-coordinates" title="Permanent link">&para;</a></h2>
 <p>Now that we have the itp file, we will learn how to generate the starting coordinates. This
 is done in two steps: (1) first use
-<a href="http://cgmartini.nl/index.php/tools2/proteins-and-bilayers">insane</a> or
+<a href="https://github.com/Tsjerk/Insane">insane</a> or
 <a href="https://github.com/marrink-lab/TS2CG">TS2CG</a> to generate a lipid bilayer of your choice.
 Don't add water or ions yet! (2) Subsequently use the polyply coordinate generation tool to
 add the polymer. For the sake of this tutorial we generate a lipid bilayer of 100 POPC lipids
 in each leaflet. If you are using insane this can be done by running the following command:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>python2<span class="w"> </span>insane.py<span class="w"> </span>-l<span class="w"> </span>POPC:95<span class="w"> </span>-l<span class="w"> </span>POPE:5<span class="w"> </span>-o<span class="w"> </span>bilayer.gro<span class="w"> </span>-dz<span class="w"> </span><span class="m">15</span>.0<span class="w"> </span>-x<span class="w"> </span><span class="m">8</span>.0<span class="w"> </span>-y<span class="w"> </span><span class="m">8</span>.0
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>insane<span class="w"> </span>-l<span class="w"> </span>POPC:95<span class="w"> </span>-l<span class="w"> </span>POPE:5<span class="w"> </span>-o<span class="w"> </span>bilayer.gro<span class="w"> </span>-dz<span class="w"> </span><span class="m">15</span>.0<span class="w"> </span>-x<span class="w"> </span><span class="m">8</span>.0<span class="w"> </span>-y<span class="w"> </span><span class="m">8</span>.0
 </code></pre></div>
 <p>Now that we have the bilayer, let's begin by generating coordinates for the mushroom state.</p>
 <h3 id="31-coordinates-for-the-mushroom-state">3.1 - Coordinates for the mushroom state<a class="headerlink" href="#31-coordinates-for-the-mushroom-state" title="Permanent link">&para;</a></h3>
@@ -1201,10 +1201,10 @@ like this:</p>
 <p>The mushroom state is characterized by an unrestricted chain tethered to the lipid bilayer.
 So there is no specific directional restriction to the growing of the polymer chain. Thus we
 can use the following command to "grow" the polymer on top of the lipid bilayer:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>polyply<span class="w"> </span>gen_coords<span class="w"> </span>-p<span class="w"> </span>system.top<span class="w"> </span>-o<span class="w"> </span>struct.gro<span class="w"> </span>-res<span class="w"> </span>PEO<span class="w"> </span>OHter<span class="w"> </span>-c<span class="w"> </span>bilayer.gro<span class="w"> </span>-name<span class="w"> </span><span class="nb">test</span><span class="w"> </span>-box<span class="w"> </span><span class="m">8</span>.0<span class="w"> </span><span class="m">8</span>.0<span class="w"> </span><span class="m">20</span>.0<span class="w"> </span>-split<span class="w"> </span>POPE:HEAD-NH3:TAIL-PO4,GL1,GL2,C1A,D2A,C3A,C4A,C1B,C2B,C3B,C4B
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>polyply<span class="w"> </span>gen_coords<span class="w"> </span>-p<span class="w"> </span>system.top<span class="w"> </span>-o<span class="w"> </span>struct.gro<span class="w"> </span>-res<span class="w"> </span>EO<span class="w"> </span>OHter<span class="w"> </span>-c<span class="w"> </span>bilayer.gro<span class="w"> </span>-name<span class="w"> </span><span class="nb">test</span><span class="w"> </span>-box<span class="w"> </span><span class="m">8</span>.0<span class="w"> </span><span class="m">8</span>.0<span class="w"> </span><span class="m">20</span>.0<span class="w"> </span>-split<span class="w"> </span>POPE:HEAD-NH3:TAIL-PO4,GL1,GL2,C1A,D2A,C3A,C4A,C1B,C2B,C3B,C4B
 </code></pre></div>
 <p>To generate the structure we always need to specify the initial coordinates of the lipid
-bilayer (i.e. <code>-c bilayer.gro</code>), the residues that need to be built (<code>-res PEO OHter</code>), and
+bilayer (i.e. <code>-c bilayer.gro</code>), the residues that need to be built (<code>-res EO OHter</code>), and
 the box (<code>-box 8.0 8.0 20</code>). In addition, we choose to split the residue POPE into two
 separate residues describing the lipid head group and the lipid tail region. Run
 <code>polyply gen_coords -h</code> to get more information on the splitting syntax. Splitting the
@@ -1221,7 +1221,7 @@ more tightly packed. When we generate the initial structure we need to take thos
 into account. This can be done very easily by creating a build file, which can be used to
 specify more complex building options. First, we need to increase the grafting density. We
 generate a new lipid bilayer:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>python2<span class="w"> </span>insane.py<span class="w"> </span>-l<span class="w"> </span>POPC:75<span class="w"> </span>-l<span class="w"> </span>POPE:25<span class="w"> </span>-o<span class="w"> </span>bilayer_brush.gro<span class="w"> </span>-dz<span class="w"> </span><span class="m">33</span>.0<span class="w"> </span>-x<span class="w"> </span><span class="m">8</span>.0<span class="w"> </span>-y<span class="w"> </span><span class="m">8</span>.0
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>insane<span class="w"> </span>-l<span class="w"> </span>POPC:75<span class="w"> </span>-l<span class="w"> </span>POPE:25<span class="w"> </span>-o<span class="w"> </span>bilayer_brush.gro<span class="w"> </span>-dz<span class="w"> </span><span class="m">33</span>.0<span class="w"> </span>-x<span class="w"> </span><span class="m">8</span>.0<span class="w"> </span>-y<span class="w"> </span><span class="m">8</span>.0
 </code></pre></div>
 <p>Then we change the number of PEL molecules in the topology file to 25 for each leaflet. Your
 topology file should look like this now:</p>
@@ -1247,14 +1247,14 @@ topology file should look like this now:</p>
 <a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>PEL  0  25
 <a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>[ rw_restriction ]
 <a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>; resname start stop  normal   angle
-<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a> PEO    3   52    0 0 1     90.0
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a> EO    3   52    0 0 1     90.0
 <a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>
 <a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>[ molecule ]
 <a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>; molname
 <a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>PEL  100 125
 <a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>[ rw_restriction ]
 <a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>; resname start stop  normal   angle
-<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a> PEO    2   51    0 0 -1     90.0
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a> EO    2   51    0 0 -1     90.0
 </code></pre></div>
 <p>In this build file, we can specify building options for specific molecules in the system.
 Which molecules we want to target is specified by the <code>[ molecule ]</code> directive that is
@@ -1276,7 +1276,7 @@ the positive and negative z-axis as our reference vectors. The angle is set to 9
 which effectively means a step can never go back in the z-direction but is free to move in x
 and y. Decreasing the angle will give even straighter chains. Using this build file the
 PEGylated bilayer brush is simply generated by running:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>polyply<span class="w"> </span>gen_coords<span class="w"> </span>-p<span class="w"> </span>system.top<span class="w"> </span>-o<span class="w"> </span>struct.gro<span class="w"> </span>-res<span class="w"> </span>PEO<span class="w"> </span>OHter<span class="w"> </span>-c<span class="w"> </span>bilayer_brush.gro<span class="w"> </span>-name<span class="w"> </span><span class="nb">test</span><span class="w"> </span>-box<span class="w"> </span><span class="m">8</span>.0<span class="w"> </span><span class="m">8</span>.0<span class="w"> </span><span class="m">33</span>.0<span class="w"> </span>-split<span class="w"> </span>POPE:HEAD-NH3:TAIL-PO4,GL1,GL2,C1A,D2A,C3A,C4A,C1B,C2B,C3B,C4B<span class="w"> </span>-b<span class="w"> </span>build_file.bld
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>polyply<span class="w"> </span>gen_coords<span class="w"> </span>-p<span class="w"> </span>system.top<span class="w"> </span>-o<span class="w"> </span>struct.gro<span class="w"> </span>-res<span class="w"> </span>EO<span class="w"> </span>OHter<span class="w"> </span>-c<span class="w"> </span>bilayer_brush.gro<span class="w"> </span>-name<span class="w"> </span><span class="nb">test</span><span class="w"> </span>-box<span class="w"> </span><span class="m">8</span>.0<span class="w"> </span><span class="m">8</span>.0<span class="w"> </span><span class="m">33</span>.0<span class="w"> </span>-split<span class="w"> </span>POPE:HEAD-NH3:TAIL-PO4,GL1,GL2,C1A,D2A,C3A,C4A,C1B,C2B,C3B,C4B<span class="w"> </span>-b<span class="w"> </span>build_file.bld
 </code></pre></div>
 <p>Running this command will yield the desired polymer brush. Again, after solvating the system
 and running an energy minimization, the procedure is complete.</p>
@@ -1302,7 +1302,7 @@ However, in this case the syntax is:
 specify a point and three distances along (a, b, c) from a central point to the faces of a
 rectangle. Together with the keyword <code>out</code> it means all water molecules need to be outside a
 rectangle defined by this syntax. After having edited all files, run the following command:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>polyply<span class="w"> </span>gen_coords<span class="w"> </span>-p<span class="w"> </span>system.top<span class="w"> </span>-o<span class="w"> </span>struct.gro<span class="w"> </span>-res<span class="w"> </span>PEO<span class="w"> </span>OHter<span class="w"> </span>-c<span class="w"> </span>bilayer_brush.gro<span class="w"> </span>-name<span class="w"> </span><span class="nb">test</span><span class="w"> </span>-box<span class="w"> </span><span class="m">8</span>.0<span class="w"> </span><span class="m">8</span>.0<span class="w"> </span><span class="m">33</span>.0<span class="w"> </span>-split<span class="w"> </span>POPE:HEAD-NH3:TAIL-PO4,GL1,GL2,C1A,D2A,C3A,C4A,C1B,C2B,C3B,C4B<span class="w"> </span>-b<span class="w"> </span>build_file.bld
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>polyply<span class="w"> </span>gen_coords<span class="w"> </span>-p<span class="w"> </span>system.top<span class="w"> </span>-o<span class="w"> </span>struct.gro<span class="w"> </span>-res<span class="w"> </span>EO<span class="w"> </span>OHter<span class="w"> </span>-c<span class="w"> </span>bilayer_brush.gro<span class="w"> </span>-name<span class="w"> </span><span class="nb">test</span><span class="w"> </span>-box<span class="w"> </span><span class="m">8</span>.0<span class="w"> </span><span class="m">8</span>.0<span class="w"> </span><span class="m">33</span>.0<span class="w"> </span>-split<span class="w"> </span>POPE:HEAD-NH3:TAIL-PO4,GL1,GL2,C1A,D2A,C3A,C4A,C1B,C2B,C3B,C4B<span class="w"> </span>-b<span class="w"> </span>build_file.bld
 </code></pre></div>
 <p>After energy minimization, your system is ready to go. Note that PEGylated lipids are
 charged, so you need to add ions. It is possible to add ions with polyply, but note that in
