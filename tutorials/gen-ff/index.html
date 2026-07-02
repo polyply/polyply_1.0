@@ -12,13 +12,13 @@
         <meta name="author" content="The Polyply development team">
       
       
-        <link rel="canonical" href="https://polyply.github.io/polyply_1.0/tutorials/martini-polymers/">
+        <link rel="canonical" href="https://polyply.github.io/polyply_1.0/tutorials/gen-ff/">
       
       
-        <link rel="prev" href="../../reference/polymer-library/">
+        <link rel="prev" href="../gromos-polymer-melts/">
       
       
-        <link rel="next" href="../gromos-polymer-melts/">
+        <link rel="next" href="../pegylated-lipid-bilayers/">
       
       
         
@@ -29,7 +29,7 @@
     
     
       
-        <title>Martini Polymers - Polyply</title>
+        <title>Generating a Force Field - Polyply</title>
       
     
     
@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#tutorial-martini-polymers" class="md-skip">
+        <a href="#tutorial-generating-an-arbitrary-force-field-for-a-polymer" class="md-skip">
           Skip to content
         </a>
       
@@ -115,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Martini Polymers
+              Generating a Force Field
             
           </span>
         </div>
@@ -421,37 +421,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Martini Polymers
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../martini-polymers/" class="md-nav__link">
         
   
   
@@ -467,103 +440,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#1-introduction" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        1 - Introduction
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#2-generating-an-itp-file" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2 - Generating an itp file
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#3-generating-starting-coordinates" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3 - Generating starting coordinates
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#4-generating-starting-coordinates-for-a-mixed-peops-blend" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        4 - Generating starting coordinates for a mixed PEO/PS blend
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#5-generating-starting-coordinates-for-polymer-solutions" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        5 - Generating starting coordinates for polymer solutions
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#6-polymer-liquid-liquid-phase-separation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6 - Polymer liquid-liquid phase separation
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#7-useful-notes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        7 - Useful notes
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -601,10 +477,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../gen-ff/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Generating a Force Field
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -620,6 +523,170 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-ligpargen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. LigParGen
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. LigParGen">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-200-atom-limit-and-the-trimmed-fragment-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The 200-atom limit and the trimmed-fragment strategy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generating-the-force-field" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generating the force field
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#structure-of-the-itp-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Structure of the ITP file
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Installation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-atom-type-relabeling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Atom type relabeling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-cgsmiles-string" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. CGsmiles string
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-running-polyply-gen_ff" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Running polyply gen_ff
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Examples
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-1-polystyrene-ps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example 1: Polystyrene (PS)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1028,10 +1095,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#1-introduction" class="md-nav__link">
+  <a href="#introduction" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1 - Introduction
+        Introduction
       
     </span>
   </a>
@@ -1039,10 +1106,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#2-generating-an-itp-file" class="md-nav__link">
+  <a href="#prerequisites" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2 - Generating an itp file
+        Prerequisites
       
     </span>
   </a>
@@ -1050,10 +1117,60 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3-generating-starting-coordinates" class="md-nav__link">
+  <a href="#1-ligpargen" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3 - Generating starting coordinates
+        1. LigParGen
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. LigParGen">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-200-atom-limit-and-the-trimmed-fragment-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The 200-atom limit and the trimmed-fragment strategy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generating-the-force-field" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generating the force field
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#structure-of-the-itp-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Structure of the ITP file
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Installation
       
     </span>
   </a>
@@ -1061,10 +1178,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#4-generating-starting-coordinates-for-a-mixed-peops-blend" class="md-nav__link">
+  <a href="#3-atom-type-relabeling" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4 - Generating starting coordinates for a mixed PEO/PS blend
+        3. Atom type relabeling
       
     </span>
   </a>
@@ -1072,10 +1189,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#5-generating-starting-coordinates-for-polymer-solutions" class="md-nav__link">
+  <a href="#4-cgsmiles-string" class="md-nav__link">
     <span class="md-ellipsis">
       
-        5 - Generating starting coordinates for polymer solutions
+        4. CGsmiles string
       
     </span>
   </a>
@@ -1083,10 +1200,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#6-polymer-liquid-liquid-phase-separation" class="md-nav__link">
+  <a href="#5-running-polyply-gen_ff" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6 - Polymer liquid-liquid phase separation
+        5. Running polyply gen_ff
       
     </span>
   </a>
@@ -1094,13 +1211,30 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#7-useful-notes" class="md-nav__link">
+  <a href="#examples" class="md-nav__link">
     <span class="md-ellipsis">
       
-        7 - Useful notes
+        Examples
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-1-polystyrene-ps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example 1: Polystyrene (PS)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1124,203 +1258,185 @@
   
 
 
-<h1 id="tutorial-martini-polymers">Tutorial: Martini Polymers<a class="headerlink" href="#tutorial-martini-polymers" title="Permanent link">&para;</a></h1>
-<h2 id="1-introduction">1 - Introduction<a class="headerlink" href="#1-introduction" title="Permanent link">&para;</a></h2>
-<p>Polyply facilitates the easy generation of polymer melts / amorphous blends, polymer
-solutions, and even liquid-liquid phase separated systems. In this tutorial, we are going
-to use polyply to generate itp files and starting configurations for these three cases. In
-particular, you will generate an amorphous polymer simulation using pure PEO and a blend of
-two other polymers. Subsequently, we turn to polymer–solvent systems and last but not least
-liquid-liquid phase separated systems of Dextran and PEO. Note that all basic steps apply
-in the same manner to all-atom models, but make sure to also check out the
-<a href="../gromos-polymer-melts/">GROMOS tutorial</a> for all-atom simulations.</p>
-<h2 id="2-generating-an-itp-file">2 - Generating an itp file<a class="headerlink" href="#2-generating-an-itp-file" title="Permanent link">&para;</a></h2>
-<p>First, we need to generate an itp file for the polymers that we want to study. Polyply is
-shipped with a range of polymer input files collected in libraries, which can be used to
-generate itp files for polymers. Note that you can also implement your own polymer
-definition — to do so, check out the tutorial on
-<a href="../../reference/writing-ff-input-files/">writing .ff input files</a>. If you have any trouble,
-always feel free to raise an issue. To inspect which libraries are available within polyply,
-run:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>polyply<span class="w"> </span>-list-lib
+<h1 id="tutorial-generating-an-arbitrary-force-field-for-a-polymer">Tutorial: Generating an arbitrary force field for a polymer<a class="headerlink" href="#tutorial-generating-an-arbitrary-force-field-for-a-polymer" title="Permanent link">&para;</a></h1>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
+<p>This guide explains how to generate an OPLS-AA atomistic force field for a polymer,
+using <a href="https://zarbi.chem.yale.edu/ligpargen/">LigParGen</a> and
+<a href="https://github.com/marrink-lab/polyply_1.0"><code>polyply gen_ff</code></a>.</p>
+<div class="admonition warning">
+<p class="admonition-title"><code>gen_ff</code> is not in a stable release yet</p>
+<p>This workflow relies on <code>polyply gen_ff</code>, which currently lives only on the
+experimental <strong><code>gen_ff_clean</code></strong> development branch (see the installation step
+below). Expect experimental features and potential breaking changes, and be
+aware that commands and flags shown here may change before <code>gen_ff</code> is
+included in an official polyply release.</p>
+</div>
+<p><strong>Why OPLS-AA?</strong> While it is a relatively widely used force field for non-biological
+organic molecules, the choice of OPLS-AA here is completely arbitrary and the workflow is force-field agnostic.
+It could have been GAFF2, OpenFF, etc.</p>
+<p><strong>What is SMILES?</strong> SMILES is a text notation for chemical structures.
+You can find a <a href="https://matlantis.com/en/resources/blog/how-to-write-smiles/">notation explainer here</a>
+and visualize structures <a href="https://pubchem.ncbi.nlm.nih.gov/edit3/index.html">here</a>.</p>
+<hr />
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
+<ul>
+<li>A SMILES string or PDB file for your pentamer</li>
+<li>A virtual-environment manager (e.g. <a href="https://docs.astral.sh/uv/#highlights">uv</a> or conda)</li>
+<li>Python 3.x</li>
+</ul>
+<hr />
+<h2 id="1-ligpargen">1. LigParGen<a class="headerlink" href="#1-ligpargen" title="Permanent link">&para;</a></h2>
+<p>We use the <a href="https://zarbi.chem.yale.edu/ligpargen/">LigParGen server</a> to generate
+an initial force field in OPLS-AA format from a small-molecule fragment of the polymer.</p>
+<h3 id="the-200-atom-limit-and-the-trimmed-fragment-strategy">The 200-atom limit and the trimmed-fragment strategy<a class="headerlink" href="#the-200-atom-limit-and-the-trimmed-fragment-strategy" title="Permanent link">&para;</a></h3>
+<p>LigParGen only supports molecules of up to 200 atoms. For polymers, this means
+we cannot upload the full chain. However, we need at least 3–4 repeating units to
+correctly capture the dihedral environment of the central repeat unit.</p>
+<p>The solution is to upload a <strong>trimmed fragment</strong>: one complete central repeating unit
+flanked by 2 units on each side. This captures the correct dihedral environment
+without exceeding the atom limit. For polymers with short repeat units (e.g. PS,
+see Example 1), a full 5-mer fits comfortably within the 200-atom limit.
+See special cases below if a 5-mer exceeds the 200-atom limit.</p>
+<p>For example, the SMILES string below represents a 5-mer PS chain: 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>CCC(c1ccccc1)CC(c1ccccc1)CC(c1ccccc1)CC(c1ccccc1)CC(c1ccccc1)C
 </code></pre></div>
-<p>You should see that a library for martini3 polymers is implemented. Next, you can check
-that the building block you require is present in the library by running:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>polyply<span class="w"> </span>-list-blocks<span class="w"> </span>martini3
+Note that the PS monomer is <code>CC(c1ccccc1)</code> and the string is terminated on both sides
+by two methyl groups (<code>C</code>).</p>
+<h3 id="generating-the-force-field">Generating the force field<a class="headerlink" href="#generating-the-force-field" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Paste your SMILES string into the LigParGen input field.</li>
+<li>Under <strong>charge model</strong>, select <strong>(neutral or charged molecules)</strong>.</li>
+<li>Click <strong>Submit Molecule</strong>.</li>
+<li>Download:</li>
+<li><strong>TOP for Gromacs</strong> (<code>.itp</code>) — force field topology</li>
+<li><strong>PDB</strong> — 3D structure</li>
+</ol>
+<h3 id="structure-of-the-itp-file">Structure of the ITP file<a class="headerlink" href="#structure-of-the-itp-file" title="Permanent link">&para;</a></h3>
+<p>The ITP file contains several sections. The most important for our purposes is
+<strong><code>[ atomtypes ]</code></strong>, which defines atom type names and their associated
+Lennard-Jones parameters (σ and ε).</p>
+<hr />
+<h2 id="2-installation">2. Installation<a class="headerlink" href="#2-installation" title="Permanent link">&para;</a></h2>
+<p>The whole tutorial runs in a <strong>single environment</strong> built from the <code>gen_ff_clean</code>
+development branch of polyply, which provides <code>gen_ff</code> alongside the standard
+<code>gen_params</code> and <code>gen_coords</code>.</p>
+<p>Create a virtual environment with your favourite environment manager (for example
+<a href="https://docs.astral.sh/uv/">uv</a> or conda), then install polyply from the
+<code>gen_ff_clean</code> branch together with its dependencies:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># 1. Create and activate an environment (Python 3.11), e.g.</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="c1">#      uv:    uv venv gen_ff --python 3.11 &amp;&amp; source gen_ff/bin/activate</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1">#      conda: conda create -n gen_ff python=3.11 &amp;&amp; conda activate gen_ff</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="c1"># 2. Install CGsmiles and the other dependencies</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com/gruenewald-lab/CGsmiles.git
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>pip<span class="w"> </span>install<span class="w"> </span>scipy<span class="w"> </span>matplotlib<span class="w"> </span>shapely<span class="w"> </span>pytest
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="c1"># 3. Install polyply from the development branch</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/marrink-lab/polyply_1.0.git
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="nb">cd</span><span class="w"> </span>polyply_1.0
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>git<span class="w"> </span>checkout<span class="w"> </span>gen_ff_clean<span class="w">        </span><span class="c1"># development branch (see warning above)</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
 </code></pre></div>
-<p>To check any other library simply replace <code>martini3</code> with the library name. Running the
-command tells us that there are parameters for both PS and PEO present. Note that there are
-not always links to combine different polymers with each other. Next, we want to invoke the
-<code>gen_params</code> sub-program to generate an itp file. For a single polymer, the command has the
-following basic structure. Run <code>polyply gen_params -h</code> for more options.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>polyply<span class="w"> </span>gen_params<span class="w"> </span>-lib<span class="w"> </span>&lt;library_name&gt;<span class="w"> </span>-o<span class="w"> </span>&lt;filename&gt;.itp<span class="w"> </span>-name<span class="w"> </span>&lt;name<span class="w"> </span>of<span class="w"> </span>polymer&gt;<span class="w"> </span>-seq<span class="w"> </span><span class="o">[</span>&lt;monomer-name&gt;:&lt;number<span class="w"> </span>of<span class="w"> </span>monomers&gt;,<span class="w"> </span>...<span class="o">]</span>
-</code></pre></div>
-<p>To generate PEO of length 200 we simply need to provide the library name using <code>-lib</code>, a
-name for the itp file using <code>-o</code>, a name using <code>-name</code>, and the sequence of the polymer
-using <code>-seq</code>. In this case, the sequence is just 200 residues of EO (i.e. <code>-seq EO:200</code>).
-The full command would be:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>polyply<span class="w"> </span>gen_params<span class="w"> </span>-lib<span class="w"> </span>martini3<span class="w"> </span>-o<span class="w"> </span>PEO200.itp<span class="w"> </span>-name<span class="w"> </span>PEO<span class="w"> </span>-seq<span class="w"> </span>EO:200
-</code></pre></div>
-<p>This generates the required itp file. To do the same for PS simply change EO to STYR. If you
-need more complex linear polymer sequences, you can provide a text file with a list of
-residues and provide it using the <code>-seqf</code> option. Branched polymers are also possible to
-generate itp files for, but you have to provide a networkx <code>.json</code> describing the graph of
-the branched polymer. This
-<a href="https://github.com/marrink-lab/polyply_1.0/discussions/296">discussion</a> offers an example.
-The file also has to be provided using the <code>-seqf</code> option.</p>
-<h2 id="3-generating-starting-coordinates">3 - Generating starting coordinates<a class="headerlink" href="#3-generating-starting-coordinates" title="Permanent link">&para;</a></h2>
-<p>To generate starting coordinates all you need is the target topology file. First, we need
-the interaction parameters. Those you can download
-<a href="http://cgmartini.nl/index.php/martini-3-0">here</a>. Subsequently, write the topology file.
-In our case let's generate an amorphous system of 200 polymers. The topology file looks as
-follows:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>#include &quot;martini_v3.0.0.itp&quot;
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>#include &quot;PEO200.itp&quot;
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>[ system ]
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>; name
-<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>Melt of PEO 200
-<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>
-<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>[ molecules ]
-<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>; name  number
-<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>PEO 200
-</code></pre></div>
-<p>The martini interaction itp file (i.e. <code>martini_v3.0.0.itp</code>) can be downloaded from
-<a href="https://github.com/marrink-lab/martini-forcefields/tree/main/martini_forcefields/regular/v3.0.0/gmx_files">here</a>.
-To create starting coordinates we call the <code>gen_coords</code> sub-program with the general command
-looking as follows:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>polyply<span class="w"> </span>gen_coords<span class="w"> </span>-p<span class="w"> </span>&lt;topfilename&gt;<span class="w"> </span>-o<span class="w"> </span>&lt;filename&gt;.gro<span class="w"> </span>-name<span class="w"> </span>&lt;name&gt;<span class="w"> </span>-dens<span class="w"> </span>&lt;density&gt;
-</code></pre></div>
-<p>In order to generate coordinates you have two options for setting the system size: (1) you
-set the box size (i.e. <code>-box &lt;x&gt; &lt;y&gt; &lt;z&gt;</code>; keep in mind only rectangular boxes are currently
-supported); (2) you provide the overall system density using <code>-dens</code>. Most of the time it is
-convenient to provide the target system density. Note that sometimes it is convenient to set
-the target density a little lower than what is expected in the simulation to gain a speed-up
-in the structure generation. To further speed up the generation, you can install the
-<a href="https://numba.pydata.org/">numba package</a>. For our example, we will generate PEO at a
-target density of 1000 kg/m³, which is the Martini system density. The overall command for
-our polymer amorphous system becomes:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>polyply<span class="w"> </span>gen_coords<span class="w"> </span>-p<span class="w"> </span>system.top<span class="w"> </span>-o<span class="w"> </span>melt.gro<span class="w"> </span>-name<span class="w"> </span>PEO<span class="w"> </span>-dens<span class="w"> </span><span class="m">1000</span>
-</code></pre></div>
-<p>This should take less than 60 seconds on a single CPU provided you installed numba.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Once you have generated your melt you will need to first run an energy minimization,
-followed by a short NpT equilibration. You can download the files for minimization and
-equilibration
-<a href="https://github.com/marrink-lab/polyply_regression_tests/tree/main/tutorial_files/martini_melts">here</a>.</p>
+<p><code>gen_ff_clean</code> is a development branch — expect experimental features and
+potential breaking changes (see the warning at the top of this page).</p>
 </div>
-<p>The GROMACS commands are as follows:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>gmx<span class="w"> </span>grompp<span class="w"> </span>-f<span class="w"> </span>min.mdp<span class="w"> </span>-c<span class="w"> </span>melt.gro<span class="w"> </span>-p<span class="w"> </span>system.top<span class="w"> </span>-o<span class="w"> </span>min.tpr
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>gmx<span class="w"> </span>mdrun<span class="w"> </span>-v<span class="w"> </span>-s<span class="w"> </span>min.tpr<span class="w"> </span>-deffnm<span class="w"> </span>min
-<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
-<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>gmx<span class="w"> </span>grompp<span class="w"> </span>-f<span class="w"> </span>pre_NpT.mdp<span class="w"> </span>-c<span class="w"> </span>min.gro<span class="w"> </span>-p<span class="w"> </span>system.top<span class="w"> </span>-o<span class="w"> </span>eq.tpr
-<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>gmx<span class="w"> </span>mdrun<span class="w"> </span>-v<span class="w"> </span>-s<span class="w"> </span>eq.tpr<span class="w"> </span>-deffnm<span class="w"> </span>eq
+<hr />
+<h2 id="3-atom-type-relabeling">3. Atom type relabeling<a class="headerlink" href="#3-atom-type-relabeling" title="Permanent link">&para;</a></h2>
+<p>LigParGen assigns its own internal atom type names rather than the standard OPLS-AA
+labels that GROMACS expects. The script <code>atomtype_reduction_oplsLigParGen.py</code> fixes
+this: it matches each atom type's Lennard-Jones parameters against a dictionary of
+known OPLS-AA types and rewrites the topology with the correct labels,
+outputting <code>system_OK.top</code>.</p>
+<p>Both scripts ship with this documentation, under <code>docs/tutorials/ff_example/</code> in the
+polyply repository you already cloned above — <code>atomtype_reduction_oplsLigParGen.py</code>
+(available <a href="../ff_example/atomtype_reduction_oplsLigParGen.py">here</a>) together with its
+helper <code>itp_handling.py</code>, which must sit in a <code>src/</code> subfolder relative to it (as it does
+in the repository).</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>python<span class="w"> </span>./docs/tutorials/ff_example/atomtype_reduction_oplsLigParGen.py<span class="w"> </span>-f<span class="w"> </span>&lt;your_file&gt;_LigParGen.itp
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>mv<span class="w"> </span>system_OK.top<span class="w"> </span>&lt;your_file&gt;_LigParGen_OK.itp
 </code></pre></div>
-<p>Note that to run the system as a polymer melt you need to increase the temperature above the
-PEO melting temperature (~335 K).</p>
-<h2 id="4-generating-starting-coordinates-for-a-mixed-peops-blend">4 - Generating starting coordinates for a mixed PEO/PS blend<a class="headerlink" href="#4-generating-starting-coordinates-for-a-mixed-peops-blend" title="Permanent link">&para;</a></h2>
-<p>To generate the polymer blend you simply have to generate an itp file for PS as well.
-Subsequently, add it to your topology file and run the command above again. This will
-generate the polymer blend. Edit the topology file to include PS:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>#include &quot;martini_v3.0.0.itp&quot;
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>#include &quot;PEO200.itp&quot;
-<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>#include &quot;PS200.itp&quot;
-<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>[ system ]
-<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>; name
-<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>A blend of PEO and PS
-<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>
-<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>[ molecules ]
-<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>; name  number
-<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>PEO 200
-<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>PS 200
+<p>Then remove or comment out the entire <code>[ atomtypes ]</code> section from the <code>_OK.itp</code>
+and save as <code>_clean.itp</code>. This section is stripped because GROMACS expects atomtypes
+to be defined once at the system level (in the <code>.top</code> file), not repeated in each <code>.itp</code>.</p>
+<hr />
+<h2 id="4-cgsmiles-string">4. CGsmiles string<a class="headerlink" href="#4-cgsmiles-string" title="Permanent link">&para;</a></h2>
+<p>CGsmiles describes polymer topology at two levels. For example, for PS:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>{[#CH3][#PS]|5[#CH3]}.{#CH3=C[&gt;][&lt;],#PS=[&gt;]CC(c1ccccc1)[&lt;]}
 </code></pre></div>
-<p>Now run the coordinate generation again:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>polyply<span class="w"> </span>gen_coords<span class="w"> </span>-p<span class="w"> </span>system.top<span class="w"> </span>-o<span class="w"> </span>blend.gro<span class="w"> </span>-name<span class="w"> </span>PEO_PS_blend<span class="w"> </span>-dens<span class="w"> </span><span class="m">1000</span>
-</code></pre></div>
-<p>Again, energy minimization and equilibration are needed to get the system ready for
-production.</p>
-<h2 id="5-generating-starting-coordinates-for-polymer-solutions">5 - Generating starting coordinates for polymer solutions<a class="headerlink" href="#5-generating-starting-coordinates-for-polymer-solutions" title="Permanent link">&para;</a></h2>
-<p>If you already generated an itp file using the <code>gen_params</code> tool described in Section 2, a
-polymer solution is generated as simply as the polymer blend. First, however, a solvent has
-to be selected. Apart from water, Martini 3 offers a whole host of solvents. A comprehensive
-list can be found in
-<a href="https://github.com/marrink-lab/martini-forcefields/blob/main/martini_forcefields/regular/v3.0.0/gmx_files/martini_v3.0.0_solvents_v1.itp">this file</a>,
-which you will also need to download and include in the topology. Additional, mostly
-aromatic, solvents can be found
-<a href="https://github.com/marrink-lab/martini-forcefields/blob/main/martini_forcefields/regular/v3.0.0/gmx_files/martini_v3.0.0_small_molecules_v2.itp">here</a>.</p>
-<p>For example, PS is soluble in acetone but insoluble in water. To generate and compare both
-systems, we can simply write the following two topology files and generate the coordinates
-as before. Note that the concentration is adjusted by specifying an appropriate number of
-solvent molecules. For this example, we use 8000 acetone molecules, a 1:4 ratio of monomers
-to solvent. In subsequent commands we assume the file name to be <code>sol_sys.top</code>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>#include &quot;martini_v3.0.0.itp&quot;
-<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>#include &quot;martini_v3.0.0_solvents_v1.itp&quot;
-<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>#include &quot;PS200.itp&quot;
-<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>[ system ]
-<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>; name
-<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>A blend of PEO and PS
-<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>
-<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>[ molecules ]
-<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>; name  number
-<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>PS 10
-<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>PPN 8000
-</code></pre></div>
-<p>The command for generating the system is pretty much the same as before. Note that the
-Martini acetone density is about 970 kg/m³. The reason is that the mass of the Martini bead
-is 72 amu, while a real acetone molecule has a mass of 58 amu. Computing the number density
-by multiplying 970 kg/m³ with 58/72 gives 781 kg/m³ — the correct number density of acetone.
-This example shows that you need to set the actual Martini solvent density, which is not
-necessarily the same as the actual density. As Martini 3 reproduces densities quite well,
-you can always compare the molecular weight of the Martini molecule with the real one and
-scale the real density to get the Martini density.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>polyply<span class="w"> </span>gen_coords<span class="w"> </span>-p<span class="w"> </span>sol_sys.top<span class="w"> </span>-o<span class="w"> </span>sol_sys.gro<span class="w"> </span>-name<span class="w"> </span>PS_PPN<span class="w"> </span>-dens<span class="w"> </span><span class="m">970</span>
-</code></pre></div>
-<p>To generate the water system, just replace <code>PPN</code> with <code>W</code> and change the density to
-1000 kg/m³. Minimization and equilibration work as before.</p>
-<h2 id="6-polymer-liquid-liquid-phase-separation">6 - Polymer liquid-liquid phase separation<a class="headerlink" href="#6-polymer-liquid-liquid-phase-separation" title="Permanent link">&para;</a></h2>
-<p>Dextran and PEO form an LLPS when solvated in water above a critical concentration. Martini
-can capture these phase effects. This particular system has already been
-<a href="https://pubs.acs.org/doi/10.1021/acs.jctc.2c00757">published</a>. To set up the system we
-first have to generate the Dextran itp file. Dextran with a number-average molecular weight
-of 65 is hardly branched and forms an LLPS with PEO. Thus we generate linear Dextran:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>polyply<span class="w"> </span>gen_params<span class="w"> </span>-seq<span class="w"> </span>DEX:65<span class="w"> </span>-o<span class="w"> </span>dextran.itp<span class="w"> </span>-name<span class="w"> </span>DEX<span class="w"> </span>-lib<span class="w"> </span>martini3
-</code></pre></div>
-<p>Subsequently, we need to build the system above the critical concentration. To speed up
-phase separation and keep the system size small, we will choose a rather high concentration
-in a small system. Note that for production the system sizes should not be too small. Write
-the topology file called <code>llps.top</code>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>#include &quot;martini_v3.0.0.itp&quot;
-<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>#include &quot;martini_v3.0_solvents.itp&quot;
-<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>#include &quot;dextran.itp&quot;
-<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>#include &quot;PEO.itp&quot;
-<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>
-<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>[ system ]
-<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>LLPS of dextran PEO in water
-<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>
-<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>[ molecules ]
-<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>DEX 18
-<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a>PEO 20
-<a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a>W   13693
-</code></pre></div>
-<p>Next, we generate the coordinates for the mixed system as done in the other examples. Only
-in this case, we lower the maximum allowed force in the random-walk process by setting
-<code>-mf 5000</code>. It is not strictly needed but helps with avoiding the occasional overlap.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>polyply<span class="w"> </span>gen_coords<span class="w"> </span>-p<span class="w"> </span>llps.top<span class="w"> </span>-o<span class="w"> </span>llps.gro<span class="w"> </span>-name<span class="w"> </span>llps<span class="w"> </span>-dens<span class="w"> </span><span class="m">1000</span><span class="w"> </span>-mf<span class="w"> </span><span class="m">5000</span>
-</code></pre></div>
-<p>After energy minimization, you should see a largely mixed system of PEO and Dextran in
-water. To facilitate phase separation you can change the barostat settings to
-semi-isotropic. The phase separation takes about 500 ns before it becomes visible.</p>
-<h2 id="7-useful-notes">7 - Useful notes<a class="headerlink" href="#7-useful-notes" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Run energy minimizations with the <code>-DFLEXIBLE</code> option to use flexible bonds.</li>
-<li>Energy minimizing using GROMACS double precision can help to relax close-contact
-  configurations better.</li>
-<li>Run equilibration with the Berendsen barostat to relax to the target volume, or the
-  C-rescale barostat for isotropic systems.</li>
-<li>The solvent density in Martini is not always the same as the real density, because Martini
-  beads have a fixed mass. Compare the solvent mass to the real molecule mass to see if the
-  density has to be scaled.</li>
+<li>The first <code>{...}</code> block is the <strong>polymer-level</strong> graph: repeat units and their
+  connectivity (<code>|5</code> means 5 repetitions of <code>#PS</code>)</li>
+<li>The second <code>{...}</code> block is the <strong>monomer-level</strong> graph: each unit defined by its
+  SMILES string, with <code>[&gt;]</code> and <code>[&lt;]</code> denoting inter-unit bond attachment points</li>
 </ul>
+<p>See the <a href="https://cgsmiles.readthedocs.io/en/latest/gettingstarted/syntax_examples.html">CGsmiles documentation</a>
+and <a href="https://pubs.acs.org/doi/10.1021/acs.jcim.5c00064">publication</a> for full syntax details.</p>
+<hr />
+<h2 id="5-running-polyply-gen_ff">5. Running <code>polyply gen_ff</code><a class="headerlink" href="#5-running-polyply-gen_ff" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nb">source</span><span class="w"> </span>gen_ff/bin/activate<span class="w">   </span><span class="c1"># or: conda activate gen_ff</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>polyply<span class="w"> </span>gen_ff<span class="w"> </span>-i<span class="w"> </span>&lt;your_file&gt;_LigParGen_clean.itp<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">               </span>-s<span class="w"> </span><span class="s2">&quot;&lt;CGsmiles string&gt;&quot;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">               </span>-c<span class="w"> </span>&lt;monomer1&gt;:0<span class="w"> </span>&lt;monomer2&gt;:0<span class="w"> </span>...<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">               </span>-o<span class="w"> </span>&lt;polymer&gt;.ff
+</code></pre></div>
+<p>Key flags:
+- <code>-i</code> — input <code>.itp</code> file (<strong>use the <code>_clean.itp</code> version</strong>)
+- <code>-s</code> — CGsmiles string
+- <code>-c</code> — charge per monomer residue (e.g. <code>PS:0</code> for neutral)
+- <code>-o</code> — output <code>.ff</code> filename</p>
+<hr />
+<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
+<h3 id="example-1-polystyrene-ps">Example 1: Polystyrene (PS)<a class="headerlink" href="#example-1-polystyrene-ps" title="Permanent link">&para;</a></h3>
+<p>PS is a good first case: its styrene repeat unit is small, so a full 5-mer fits
+within LigParGen's 200-atom limit (no trimming needed, as discussed above).</p>
+<p><strong>SMILES for LigParGen</strong> (5-mer with methyl terminals):
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>CCC(c1ccccc1)CC(c1ccccc1)CC(c1ccccc1)CC(c1ccccc1)CC(c1ccccc1)C
+</code></pre></div></p>
+<p>Download and relabel atomtypes as described in Sections 1 and 3, saving the
+final cleaned file as <code>PS_n5_LigParGen_clean.itp</code>.</p>
+<p><strong>CGsmiles string:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>{[#CH3][#PS]|5[#CH3]}.{#CH3=C[&gt;][&lt;],#PS=[&gt;]CC(c1ccccc1)[&lt;]}
+</code></pre></div></p>
+<p><strong>Running <code>gen_ff</code>:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nb">source</span><span class="w"> </span>gen_ff/bin/activate
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>polyply<span class="w"> </span>gen_ff<span class="w"> </span>-i<span class="w"> </span>PS_n5_LigParGen_clean.itp<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">               </span>-s<span class="w"> </span><span class="s2">&quot;{[#CH3][#PS]|5[#CH3]}.{#CH3=C[&gt;][&lt;],#PS=[&gt;]CC(c1ccccc1)[&lt;]}&quot;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">               </span>-c<span class="w"> </span>CH3:0<span class="w"> </span>PS:0<span class="w"> </span>-o<span class="w"> </span>PS.ff
+</code></pre></div></p>
+<p><strong>Validation:</strong></p>
+<p>To generate coordinates and run a quick energy minimization you need two more input
+files, both provided alongside this tutorial in <code>docs/tutorials/ff_example/</code>:</p>
+<ul>
+<li><a href="../ff_example/system_test.top"><code>system_test.top</code></a> — the system topology. It includes
+  the OPLS-AA force field and the itp generated by <code>gen_params</code> below (<code>PS_n5_test.itp</code>),
+  and lists a single <code>PS</code> molecule.</li>
+<li><a href="../ff_example/em.mdp"><code>em.mdp</code></a> — a standard steepest-descent energy-minimization
+  parameter file.</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Set the OPLS-AA force-field path in <code>system_test.top</code></p>
+<p><code>system_test.top</code> includes the OPLS-AA force field with a placeholder path:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>#include &quot;/absolute-path-to/share/gromacs/top/oplsaa.ff/forcefield.itp&quot;
+</code></pre></div>
+<p><code>gen_coords</code> resolves this include using the <strong>absolute path</strong>, so it cannot be
+known in advance — it depends on your GROMACS installation. Before running the
+commands below, replace <code>/absolute-path-to/</code> with the actual location of your
+GROMACS <code>top</code> directory (for example <code>/usr/local/gromacs/share/gromacs/top/...</code>;
+if <code>gmx</code> is on your <code>PATH</code>, the command <code>$(dirname $(which gmx))/../share/gromacs/top</code>
+resolves to it). A relative <code>#include "oplsaa.ff/forcefield.itp"</code> is <strong>not</strong>
+sufficient here.</p>
+</div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nb">source</span><span class="w"> </span>gen_ff/bin/activate<span class="w">   </span><span class="c1"># or: conda activate gen_ff</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>polyply<span class="w"> </span>gen_params<span class="w"> </span>-f<span class="w"> </span>PS.ff<span class="w"> </span>-seq<span class="w"> </span>CH3:1<span class="w"> </span>PS:5<span class="w"> </span>CH3:1<span class="w"> </span>-o<span class="w"> </span>PS_n5_test.itp<span class="w"> </span>-name<span class="w"> </span>PS
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>polyply<span class="w"> </span>gen_coords<span class="w"> </span>-p<span class="w"> </span>system_test.top<span class="w"> </span>-o<span class="w"> </span>system_test.gro<span class="w"> </span>-name<span class="w"> </span>PS<span class="w"> </span>-box<span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="m">5</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>gmx<span class="w"> </span>grompp<span class="w"> </span>-p<span class="w"> </span>system_test.top<span class="w"> </span>-c<span class="w"> </span>system_test.gro<span class="w"> </span>-f<span class="w"> </span>em.mdp<span class="w"> </span>-o<span class="w"> </span><span class="m">1</span>-em
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>gmx<span class="w"> </span>mdrun<span class="w"> </span>-v<span class="w"> </span>-deffnm<span class="w"> </span><span class="m">1</span>-em
+</code></pre></div>
 
 
 
@@ -1356,7 +1472,7 @@ semi-isotropic. The phase separation takes about 500 ns before it becomes visibl
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../../reference/polymer-library/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Polymer Library">
+          <a href="../gromos-polymer-melts/" class="md-footer__link md-footer__link--prev" aria-label="Previous: GROMOS Polymer Melts">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -1366,20 +1482,20 @@ semi-isotropic. The phase separation takes about 500 ns before it becomes visibl
                 Previous
               </span>
               <div class="md-ellipsis">
-                Polymer Library
+                GROMOS Polymer Melts
               </div>
             </div>
           </a>
         
         
           
-          <a href="../gromos-polymer-melts/" class="md-footer__link md-footer__link--next" aria-label="Next: GROMOS Polymer Melts">
+          <a href="../pegylated-lipid-bilayers/" class="md-footer__link md-footer__link--next" aria-label="Next: PEGylated Lipid Bilayers">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                GROMOS Polymer Melts
+                PEGylated Lipid Bilayers
               </div>
             </div>
             <div class="md-footer__button md-icon">
